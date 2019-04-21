@@ -1,0 +1,3 @@
+dades_scheduled_task_homepage:
+    path:     /
+    defaults: { _controller: DadesScheduledTaskBundle:Default:index }
