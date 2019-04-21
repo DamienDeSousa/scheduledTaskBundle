@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Dades\\ScheduledTask\\":""
+            "Dades\\ScheduledTaskBundle\\":""
         }
    },
    "autoload-dev": {
         "psr-4": {
-            "Dades\\ScheduledTask\\Tests\\": "/Tests/"
+            "Dades\\ScheduledTaskBundle\\Tests\\": "Tests/"
         }
     }
 }
