@@ -61,7 +61,7 @@ public function indexAction(Request $request, ScheduledTaskService $scheduled)
     //code
 }
 ```
-Note that this is a Service, so you can inject it where you want.
+Note that this is a Service, so you can inject it anywhere you want.
 
 ### Create a scheduled task
 
