@@ -4,7 +4,7 @@ A Symfony Bundle that schedule tasks and commands on Windows and Linux.
 
 ## Installation
 
-1. Run de following command to add the bundle to your project as a composer dependency:  
+1. Run the following command to add the bundle to your project as a composer dependency:  
 `composer require dades/scheduledtask`
 
 2. Add the bundle to your application kernel:  
