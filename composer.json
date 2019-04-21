@@ -1,5 +1,5 @@
 {
-    "name": "dades/Scheduledtask",
+    "name": "dades/scheduledtask",
     "license": "MIT",
     "description": "The Symfony Bundle to schedule tasks",
     "homepage": "",
