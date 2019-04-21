@@ -51,7 +51,7 @@ You just need to handle these 2 classes:
 Dades\ScheduledTaskBundle\Entity\ScheduledTask  
 Dades\ScheduledTaskBundle\Service\ScheduledTaskService
 
-Inject the service that handle ScheduledTask:  
+Inject the service that handles ScheduledTask class:  
 
 ```php
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
