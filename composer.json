@@ -3,7 +3,13 @@
     "license": "MIT",
     "description": "The Symfony Bundle to schedule tasks",
     "homepage": "",
-    "keywords": ["cron", "schedule", "multiplatforme"],
+    "keywords": [
+        "cron",
+        "schedule",
+        "multiplatforme",
+        "Windows",
+        "Linux"
+    ],
     "authors": [
         {
             "name": "Damien DE SOUSA",

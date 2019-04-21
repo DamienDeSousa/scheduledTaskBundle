@@ -1,6 +1,6 @@
 # Dades\ScheduledTaskBundle
 
-A Symfony Bundle that schedule tasks and commands.
+A Symfony Bundle that schedule tasks and commands on Windows and Linux.
 
 ## Installation
 
