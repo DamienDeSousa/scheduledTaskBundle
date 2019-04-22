@@ -3,6 +3,7 @@
 namespace Dades\ScheduledTaskBundle\Service\Utility;
 
 use Dades\ScheduledTaskBundle\Service\Utility\OperatingSystem;
+use Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 
 /**
  * Determine if the folder separator is / or \
@@ -41,7 +42,7 @@ class FolderSeparator
                 break;
 
             default:
-                //throw une erreur
+                throw new OSNotFoundException("The [$os] OS is unknown.", 1, __FILE__, __LINE__);
                 break;
         }
     }
