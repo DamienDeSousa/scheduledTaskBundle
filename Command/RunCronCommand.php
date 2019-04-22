@@ -21,8 +21,16 @@ class RunCronCommand extends Command
      */
     protected static $defaultName = 'cron:run';
 
+    /**
+     * The project root directory
+     * @var string
+     */
     protected $projectDir;
 
+    /**
+     * The file that contains tasks logs
+     * @var string
+     */
     protected $fileLog;
 
     /**
@@ -31,6 +39,11 @@ class RunCronCommand extends Command
      */
     protected $scheduledTaskService;
 
+    /**
+     * @param string               $projectdir           [description]
+     * @param string               $fileLog              [description]
+     * @param ScheduledTaskService $scheduledTaskService [description]
+     */
     public function __construct(string $projectdir, string $fileLog, ScheduledTaskService $scheduledTaskService)
     {
         parent::__construct();
@@ -58,15 +71,6 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //prochaines étapes:
-        //DONE : exécuter le code ci-dessous et rediriger l'affichage dans le dossier var/logs/dades_scheduled_task_bundle.log
-        //DONE : déléguer le système de log à un service dédié
-        //DONE : créer des commandes et les exécuter
-        //DONE : tester la ligne suivante: exec("phpp", $output, $status);
-        //faire du test en masse
-
-        //https://stackoverflow.com/questions/11209529/how-to-access-an-application-parameters-from-a-service
-
         foreach ($this->scheduledTaskService->getScheduledTasks() as $task) {
             $stderr = [];
             $status = 0;
@@ -86,12 +90,5 @@ class RunCronCommand extends Command
                 $logger->writeLog($status, $stderr);
             }
         }
-
-
-        //commande à créer:
-        //schtasks /CREATE /TN "account_book_cron" /TR "php D:\symfonyProjects\3.4\account-book\bin\console cron:run" /SC minute
-
-        //linux: ls ~/Document/symfonyProjects/3.4/account-book/var/dades_scheduled_task_bundle.log
-        //* * * * * php ~/Document/symfonyProjects/3.4/account-book/bin/console cron:run
     }
 }

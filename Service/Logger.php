@@ -28,11 +28,15 @@ class Logger
      */
     protected $path;
 
+    /**
+     * Contains the right folder separator the the current OS
+     * @var string
+     */
     protected $folderSeparator;
 
     /**
-     * [__construct description]
-     * @param string $rootDir [description]
+     * @param string $projectdir [description]
+     * @param string $fileLog    [description]
      */
     public function __construct(string $projectdir, string $fileLog)
     {
