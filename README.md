@@ -1,6 +1,7 @@
 # Dades\ScheduledTaskBundle
 
-A Symfony Bundle that schedule tasks and commands on Windows and Linux.
+A Symfony Bundle that schedule tasks and commands on Windows and Linux.  
+It uses the cron system from Linux on both operating systems.
 
 ## Installation
 
@@ -65,7 +66,7 @@ Note that this is a Service, so you can inject it anywhere you want.
 
 ### Create a scheduled task
 
-Once your Service is injected, you can do the following things:
+Once your Service is injected, you can do the following thing:
 
 ```php
 public function indexAction(Request $request, ScheduledTaskService $scheduledTaskService)
