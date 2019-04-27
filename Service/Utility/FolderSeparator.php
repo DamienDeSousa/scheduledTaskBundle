@@ -33,11 +33,15 @@ class FolderSeparator
         $os = OperatingSystem::checkOS();
 
         switch ($os) {
-            case 'WIN':
+            case OperatingSystem::WINDOWS:
                 return self::WIN_SEPARATOR;
                 break;
 
-            case 'LINUX':
+            case OperatingSystem::LINUX:
+                return self::LINUX_SEPARATOR;
+                break;
+
+            case OperatingSystem::APPLE:
                 return self::LINUX_SEPARATOR;
                 break;
 
