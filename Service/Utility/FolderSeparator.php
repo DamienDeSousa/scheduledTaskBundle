@@ -1,5 +1,4 @@
 <?php
-
 namespace Dades\ScheduledTaskBundle\Service\Utility;
 
 use Dades\ScheduledTaskBundle\Service\Utility\OperatingSystem;
@@ -17,13 +16,11 @@ class FolderSeparator
      * @var string
      */
     const WIN_SEPARATOR = "\\";
-
     /**
      * Linux separator
      * @var string
      */
     const LINUX_SEPARATOR = "/";
-
     /**
      * Return the right separator
      * @return string [description]
@@ -31,16 +28,16 @@ class FolderSeparator
     public static function getSeparator(): string
     {
         $os = OperatingSystem::checkOS();
-
         switch ($os) {
-            case 'WIN':
+            case OperatingSystem::WINDOWS:
                 return self::WIN_SEPARATOR;
                 break;
-
-            case 'LINUX':
+            case OperatingSystem::LINUX:
                 return self::LINUX_SEPARATOR;
                 break;
-
+            case OperatingSystem::APPLE:
+                return self::LINUX_SEPARATOR;
+                break;
             default:
                 throw new OSNotFoundException("The [$os] OS is unknown.", 1, __FILE__, __LINE__);
                 break;
