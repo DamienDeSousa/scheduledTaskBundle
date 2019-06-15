@@ -90,6 +90,12 @@ class OperatingSystem
         } elseif (\in_array(self::getOS(), self::APPLE_OS)) {
             return self::APPLE;
         }
+        if (\in_array(PHP_OS, self::LINUX_OS)) {
+            return self::LINUX;
+        }
+        if (\in_array(PHP_OS, self::APPLE_OS)) {
+            return self::APPLE;
+        }
 
         throw new OSNotFoundException('The OS ['.self::getOS().'] is not found', 1, __FILE__, __LINE__);
     }

@@ -47,7 +47,6 @@ class FolderSeparator
     public static function getSeparator(): string
     {
         $os = OperatingSystem::checkOS();
-
         switch ($os) {
             case OperatingSystem::WINDOWS:
                 return self::WIN_SEPARATOR;

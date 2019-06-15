@@ -11,10 +11,10 @@ services:
         resource: '../../*'
         exclude: '../../{Entity,Repository,Tests}'
 
-    Dades\ScheduledTaskBundle\Controller\:
-        resource: '../../Controller'
-        public: true
-        tags: ['controller.service_arguments']
+    # Dades\ScheduledTaskBundle\Controller\:
+    #     resource: '../../Controller'
+    #     public: true
+    #     tags: ['controller.service_arguments']
 
     Dades\ScheduledTaskBundle\Command\RunCronCommand:
         $projectdir: '%kernel.project_dir%'
