@@ -1,42 +1,52 @@
 <?php
+/**
+ * Log messages in var/logs/dades_scheduled_task_bundle.log
+ *
+ * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ */
 
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Dades\ScheduledTaskBundle\Service\Utility\FolderSeparator;
 
 /**
- * Log messages in var/logs/dades_scheduled_task_bundle.log
- * @author Damien DE SOUSA
+ * Logger class
  */
 class Logger
 {
     /**
      * The file in which the logs will be written
+     *
      * @var string
      */
     protected $fileLog;
 
     /**
      * The path where the log file is
+     *
      * @var string
      */
     protected $projectdir;
 
     /**
      * The full path, the project dir plus the file name
+     *
      * @var string
      */
     protected $path;
 
     /**
      * Contains the right folder separator the the current OS
+     *
      * @var string
      */
     protected $folderSeparator;
 
     /**
-     * @param string $projectdir [description]
-     * @param string $fileLog    [description]
+     * Constructor
+     *
+     * @param string $projectdir
+     * @param string $fileLog
      */
     public function __construct(string $projectdir, string $fileLog)
     {
@@ -46,18 +56,19 @@ class Logger
         $this->path = $this->projectdir.$this->folderSeparator.'var'.$this->folderSeparator.'logs'.$this->folderSeparator.$this->fileLog;
 
         if (!file_exists($this->path)) {
-            file_put_contents($this->path, "");
+            file_put_contents($this->path, '');
         }
     }
 
     /**
      * Write log with the status code and the message to write
-     * @param  int    $status [description]
-     * @param  array|string $output [description]
+     *
+     * @param  int    $status
+     * @param  array|string $output
      */
     public function writeLog(int $status, $output)
     {
-        $message = "";
+        $message = '';
         if (is_array($output)) {
             $message = $this->stringifyOutput($output);
         } elseif (is_string($output)) {
@@ -66,19 +77,21 @@ class Logger
 
         file_put_contents(
             $this->path,
-            "[".$this->getDate()."]: ".$message.PHP_EOL,
+            '['.$this->getDate().']: '.$message.PHP_EOL,
             FILE_APPEND
         );
     }
 
     /**
      * Transforme an array to a string
-     * @param  array  $output [description]
-     * @return string         [description]
+     *
+     * @param  array  $output
+     *
+     * @return string
      */
     public function stringifyOutput(array $output): string
     {
-        $result = "";
+        $result = '';
         foreach ($output as $key => $value) {
             $result .= $value.PHP_EOL;
         }
@@ -87,7 +100,8 @@ class Logger
 
     /**
      * Get the current date
-     * @return [type] [description]
+     *
+     * @return string
      */
     protected function getDate()
     {
@@ -95,8 +109,9 @@ class Logger
     }
 
     /**
-     * Get the current file
-     * @return string [description]
+     * Get the current file log
+     *
+     * @return string
      */
     public function getFile()
     {

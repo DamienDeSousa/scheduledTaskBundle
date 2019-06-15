@@ -1,17 +1,24 @@
 <?php
+/**
+ * Exception when an entity is nt found
+ *
+ * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ *
+ * @copyright 2019
+ */
 
 namespace Dades\ScheduledTaskBundle\Exception;
 
 /**
- * To throw when an entity is nt found
- *
- * @author Damien DE SOUSA
+ * NoSuchEntityException class
  */
 class NoSuchEntityException extends \Exception
 {
     /**
-     * @param string $message [description]
-     * @param int    $code    [description]
+     * Constructor
+     *
+     * @param string $message
+     * @param int    $code
      */
     public function __construct(string $message, int $code)
     {
@@ -20,12 +27,13 @@ class NoSuchEntityException extends \Exception
 
     /**
      * Return an explicit message of the error
-     * @return string [description]
+     *
+     * @return string
      */
     public function getExplicitMessage()
     {
         $message = $this->message;
-        $message .= "Stack trace:".PHP_EOL;
+        $message .= 'Stack trace:'.PHP_EOL;
         $message .= $this->getTraceAsString().PHP_EOL;
 
         return $message;

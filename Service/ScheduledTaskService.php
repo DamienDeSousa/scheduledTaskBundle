@@ -1,4 +1,11 @@
 <?php
+/**
+ * Service to use for manage the scheduled tasks.
+ *
+ * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ *
+ * @copyright 2019
+ */
 
 namespace Dades\ScheduledTaskBundle\Service;
 
@@ -10,26 +17,28 @@ use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Cron\CronExpression;
 
 /**
- * Service to use for manage the scheduled tasks.
- *
- * @author Damien DE SOUSA
+ * ScheduledTaskService class
  */
 class ScheduledTaskService
 {
     /**
      * EntityManager
+     *
      * @var EntityManagerInterface
      */
     protected $entityManager;
 
     /**
-     * [protected description]
+     * ScheduledTask repository
+     *
      * @var \Doctrine\Common\Persistence\ObjectRepository
      */
     protected $repository;
 
     /**
-     * @param EntityManagerInterface $entityManager [description]
+     * Entity Manager
+     *
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -39,7 +48,8 @@ class ScheduledTaskService
 
     /**
      * Create a new ScheduledTask
-     * @return ScheduledTask [description]
+     *
+     * @return ScheduledTask
      */
     public function create(): ScheduledTask
     {
@@ -48,7 +58,8 @@ class ScheduledTaskService
 
     /**
      * Return all the scheduled tasks
-     * @return ScheduledTask[] [description]
+     *
+     * @return ScheduledTask[]
      */
     public function getScheduledTasks()
     {
@@ -57,8 +68,10 @@ class ScheduledTaskService
 
     /**
      * Return the specific scheduled task
-     * @param  int    $id [description]
-     * @return ScheduledTask|null     [description]
+     *
+     * @param  int    $id
+     *
+     * @return ScheduledTask|null
      */
     public function getScheduledTask(int $id)
     {
@@ -73,8 +86,8 @@ class ScheduledTaskService
 
     /**
      * Save a scheduled task
-     * @param  ScheduledTask $scheduledTask [description]
-     * @return void                       [description]
+     *
+     * @param  ScheduledTask $scheduledTask
      */
     public function save(ScheduledTask $scheduledTask)
     {
@@ -84,8 +97,8 @@ class ScheduledTaskService
 
     /**
      * Update a scheduled task
-     * @param  ScheduledTask $scheduledTask [description]
-     * @return void                       [description]
+     *
+     * @param  ScheduledTask $scheduledTask
      */
     public function update(ScheduledTask $scheduledTask)
     {
@@ -94,8 +107,8 @@ class ScheduledTaskService
 
     /**
      * Delete a scheduled task
-     * @param  ScheduledTask $scheduledTask [description]
-     * @return void                       [description]
+     *
+     * @param  ScheduledTask $scheduledTask
      */
     public function delete(ScheduledTask $scheduledTask)
     {
@@ -105,8 +118,10 @@ class ScheduledTaskService
 
     /**
      * Test if a command should be run now
-     * @param  ScheduledTask $scheduledTask [description]
-     * @return bool                         [description]
+     *
+     * @param  ScheduledTask $scheduledTask
+     *
+     * @return bool
      */
     public function isDue(ScheduledTask $scheduledTask): bool
     {

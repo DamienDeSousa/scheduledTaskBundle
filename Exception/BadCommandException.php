@@ -1,26 +1,34 @@
 <?php
+/**
+ * Exception when a command gets an error
+ *
+ * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ *
+ * @copyright 2019
+ */
 
 namespace Dades\ScheduledTaskBundle\Exception;
 
 /**
- * To throw when a command get an error
- *
- * @author Damien DE SOUSA
+ * BadCommandException class
  */
 class BadCommandException extends \Exception
 {
     /**
      * the command that is on error
+     *
      * @var string
      */
     protected $command;
 
     /**
-     * @param string $command [description]
-     * @param string $message [description]
-     * @param int    $code    [description]
-     * @param string $file    [description]
-     * @param int    $line    [description]
+     * Constructor
+     *
+     * @param string $command
+     * @param string $message
+     * @param int    $code
+     * @param string $file
+     * @param int    $line
      */
     public function __construct(string $command, string $message, int $code, string $file, int $line)
     {
@@ -33,7 +41,8 @@ class BadCommandException extends \Exception
 
     /**
      * Return an explicit message of the error
-     * @return string [description]
+     *
+     * @return string
      */
     public function getExplicitMessage()
     {

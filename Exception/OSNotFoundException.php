@@ -1,19 +1,26 @@
 <?php
+/**
+ * Exception used when OS is not found
+ *
+ * @author Damien DE SOUSA <de.sousa.damien.prod@gmail.com>
+ *
+ * @copyright 2019
+ */
 
 namespace Dades\ScheduledTaskBundle\Exception;
 
 /**
- * To throw when the operating system is not found
- *
- * @author Damien DE SOUSA
+ * OSNotFoundException class
  */
 class OSNotFoundException extends \Exception
 {
     /**
-     * @param string $message [description]
-     * @param int    $code    [description]
-     * @param string $file    [description]
-     * @param int    $line    [description]
+     * Constructor
+     *
+     * @param string $message
+     * @param int    $code
+     * @param string $file
+     * @param int    $line
      */
     public function __construct(string $message, int $code, string $file, int $line)
     {
@@ -24,10 +31,11 @@ class OSNotFoundException extends \Exception
 
     /**
      * Return an explicit message of the error
-     * @return [type] [description]
+     *
+     * @return string
      */
     public function getExplicitMessage()
     {
-        return $this->getMessage()." in ".$this->getFile()." at line ".$this->getLine().PHP_EOL.$this->getTraceAsString().PHP_EOL;
+        return $this->getMessage().' in '.$this->getFile().' at line '.$this->getLine().PHP_EOL.$this->getTraceAsString().PHP_EOL;
     }
 }

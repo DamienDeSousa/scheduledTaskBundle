@@ -1,4 +1,11 @@
 <?php
+/**
+ * Run all defined cron in Symfony.
+ *
+ * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ *
+ * @copyright 2019
+ */
 
 namespace Dades\ScheduledTaskBundle\Command;
 
@@ -9,40 +16,44 @@ use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
 use Dades\ScheduledTaskBundle\Service\Logger;
 
 /**
- * Run all defined cron in Symfony.
- *
- * @author Damien DE SOUSA
+ * RunCronCommand class
  */
 class RunCronCommand extends Command
 {
     /**
      * Command that run all cron defined in this bundle
+     *
      * @var string
      */
     protected static $defaultName = 'cron:run';
 
     /**
      * The project root directory
+     *
      * @var string
      */
     protected $projectDir;
 
     /**
      * The file that contains tasks logs
+     *
      * @var string
      */
     protected $fileLog;
 
     /**
      * ScheduledTaskService that manage ScheduledTask
+     *
      * @var ScheduledTaskService
      */
     protected $scheduledTaskService;
 
     /**
-     * @param string               $projectdir           [description]
-     * @param string               $fileLog              [description]
-     * @param ScheduledTaskService $scheduledTaskService [description]
+     * Constructor
+     *
+     * @param string               $projectdir
+     * @param string               $fileLog
+     * @param ScheduledTaskService $scheduledTaskService
      */
     public function __construct(string $projectdir, string $fileLog, ScheduledTaskService $scheduledTaskService)
     {
@@ -55,7 +66,6 @@ class RunCronCommand extends Command
 
     /**
      * Configure the command
-     * @return void [description]
      */
     protected function configure()
     {
@@ -65,9 +75,9 @@ class RunCronCommand extends Command
 
     /**
      * The body of the command
-     * @param  InputInterface  $input  [description]
-     * @param  OutputInterface $output [description]
-     * @return void                  [description]
+     *
+     * @param  InputInterface  $input
+     * @param  OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -152,3 +152,8 @@ If the file doesn't exist, don't worry, it will be automatically created.
 This bundle use the dragonmantank/cron-expression library.  
 This lib read the cron expression of each task to determine if this task should be run now.  
 I invite you to read more about this [here](https://packagist.org/packages/dragonmantank/cron-expression).
+
+
+## What's new on this version ?
+
+Better detection of the operating system on which the bundle is running.
