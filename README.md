@@ -3,6 +3,10 @@
 A Symfony Bundle that schedule tasks and commands on Windows and Linux.  
 It uses the cron system from Linux on both operating systems.
 
+## What's new on this version ?
+
+Unit tests are added to test the `Dades\ScheduledTaskBundle\Service\ScheduledTaskService`.
+
 ## Installation
 
 1. Run the following command to add the bundle to your project as a composer dependency:  
@@ -152,8 +156,3 @@ If the file doesn't exist, don't worry, it will be automatically created.
 This bundle use the dragonmantank/cron-expression library.  
 This lib read the cron expression of each task to determine if this task should be run now.  
 I invite you to read more about this [here](https://packagist.org/packages/dragonmantank/cron-expression).
-
-
-## What's new on this version ?
-
-Better detection of the operating system on which the bundle is running.
