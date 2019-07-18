@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Service to use for manage the scheduled tasks.
  *
@@ -125,7 +126,7 @@ class ScheduledTaskService
      */
     public function isDue(ScheduledTask $scheduledTask): bool
     {
-        $cron = CronExpression::factory($scheduledTask->getCronExpresion());
+        $cron = CronExpression::factory($scheduledTask->getCronExpression());
 
         return $cron->isDue();
     }

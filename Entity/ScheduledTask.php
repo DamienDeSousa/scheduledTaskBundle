@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Represent a task to schedule
  *
@@ -40,7 +41,7 @@ class ScheduledTask
      *
      * @ORM\Column(name="cron_expression", type="string", length=20)
      */
-    private $cronExpresion;
+    private $cronExpression;
 
     /**
      * Get id
@@ -81,21 +82,21 @@ class ScheduledTask
      *
      * @return string
      */
-    public function getCronExpresion()
+    public function getCronExpression()
     {
-        return $this->cronExpresion;
+        return $this->cronExpression;
     }
 
     /**
      * Set the value of Cron Expresion
      *
-     * @param string cronExpresion
+     * @param string cronExpression
      *
      * @return ScheduledTask
      */
-    public function setCronExpresion($cronExpresion)
+    public function setCronExpression($cronExpression)
     {
-        $this->cronExpresion = $cronExpresion;
+        $this->cronExpression = $cronExpression;
 
         return $this;
     }
