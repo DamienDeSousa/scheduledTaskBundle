@@ -95,4 +95,12 @@ class ScheduledTaskServiceTest extends KernelTestCase
         $scheduledTaskService->delete($scheduledTask);
         $removedTask = $scheduledTaskService->getScheduledTask($id);
     }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->entityManager->close();
+        $this->entityManager = null;
+    }
 }
