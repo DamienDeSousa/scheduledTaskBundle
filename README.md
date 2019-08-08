@@ -5,7 +5,7 @@ It uses the cron system from Linux on both operating systems.
 
 ## What's new on this version ?
 
-Unit tests are added to test the `Dades\ScheduledTaskBundle\Service\ScheduledTaskService`.
+Use `Symfony\Component\Process\Process` instead of `exec()` to run tasks.
 
 ## Installation
 
