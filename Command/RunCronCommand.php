@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Run all defined cron in Symfony.
  *
@@ -14,6 +15,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
 use Dades\ScheduledTaskBundle\Service\Logger;
+use Symfony\Component\Process\Process;
+use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
 
 /**
  * RunCronCommand class
@@ -82,23 +85,32 @@ class RunCronCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         foreach ($this->scheduledTaskService->getScheduledTasks() as $task) {
-            $stderr = [];
-            $status = 0;
-
             if ($this->scheduledTaskService->isDue($task)) {
-                exec($task->getCommand(), $stderr, $status);
-
-                if ($status !== 0) {
-                    array_unshift($stderr, "The command [".$task->getCommand()."] failed.");
-                }
-
-                if ($status === 0) {
-                    array_unshift($stderr, "The command [".$task->getCommand()."] succeed.");
-                }
-
-                $logger = new Logger($this->projectDir, $this->fileLog);
-                $logger->writeLog($status, $stderr);
+                $this->runProcess($task);
             }
         }
+    }
+
+    /**
+     * Run the command task
+     *
+     * @param ScheduledTask $scheduledTask
+     */
+    protected function runProcess(ScheduledTask $scheduledTask)
+    {
+        try {
+            $process = new Process($scheduledTask->getCommand());
+            $exitCode = $process->run();
+            $outputMsg = $process->getOutput() . PHP_EOL;
+
+            if (!$process->isSuccessful()) {
+                $outputMsg .= $process->getErrorOutput();
+            }
+        } catch (\Exception $e) {
+            $outputMsg = $e->getTraceAsString();
+        }
+
+        $logger = new Logger($this->projectDir, $this->fileLog);
+        $logger->writeLog($exitCode, $outputMsg);
     }
 }

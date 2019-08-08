@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Log messages in var/logs/dades_scheduled_task_bundle.log
  *
@@ -36,7 +37,7 @@ class Logger
     protected $path;
 
     /**
-     * Contains the right folder separator the the current OS
+     * Contains the right folder separator for the current OS
      *
      * @var string
      */
@@ -53,7 +54,8 @@ class Logger
         $this->projectdir = $projectdir;
         $this->fileLog = $fileLog;
         $this->folderSeparator = FolderSeparator::getSeparator();
-        $this->path = $this->projectdir.$this->folderSeparator.'var'.$this->folderSeparator.'logs'.$this->folderSeparator.$this->fileLog;
+        $this->path = $this->projectdir . $this->folderSeparator . 'var' .
+            $this->folderSeparator . 'logs' . $this->folderSeparator . $this->fileLog;
 
         if (!file_exists($this->path)) {
             file_put_contents($this->path, '');
@@ -77,7 +79,7 @@ class Logger
 
         file_put_contents(
             $this->path,
-            '['.$this->getDate().']: '.$message.PHP_EOL,
+            '[' . $this->getDate() . ']: ' . $message . PHP_EOL,
             FILE_APPEND
         );
     }
@@ -93,7 +95,7 @@ class Logger
     {
         $result = '';
         foreach ($output as $key => $value) {
-            $result .= $value.PHP_EOL;
+            $result .= $value . PHP_EOL;
         }
         return $result;
     }
