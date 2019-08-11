@@ -3,12 +3,14 @@
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Cron\CronExpression;
-use Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTask;
-use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTask;
+use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
+use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 
-class SymfonyScheduledTaskService
+class SymfonyScheduledTaskService implements RunnableInterface
 {
     protected $entityManager;
 
@@ -116,17 +118,35 @@ class SymfonyScheduledTaskService
      *
      * @param SymfonyScheduledTask $symfonyScheduledTask
      */
-    public function run($symfonyScheduledTask)
+    public function runOne($symfonyScheduledTask, $application, $output)
     {
-        $application = new Application('ScheduledTaskBundle');
         $command = $application->find($symfonyScheduledTask->getName());
         $parameters = [
             'command' => $symfonyScheduledTask->getName(),
         ];
         foreach ($symfonyScheduledTask->getArguments() as $argument) {
-            $parameters[$argument->getName()] = $argument->value();
+            $parameters[$argument->getName()] = $argument->getValue();
         }
         $arrInput = new ArrayInput($parameters);
         $code = $command->run($arrInput, $output);
+        if ($code != 0) {
+            //error
+        }
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function run($output, $application = null)
+    {
+        if ($application == null) {
+            throw new \InvalidArgumentException('$application must be set, null given.', 1);
+        }
+        $tasks = $this->getScheduledTasks();
+        foreach ($tasks as $task) {
+            $this->runOne($task, $application, $output);
+        }
     }
 }

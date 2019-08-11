@@ -16,11 +16,12 @@ use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Dades\ScheduledTaskBundle\Service\Logger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Process\Process;
+use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 
 /**
  * ScheduledTaskService class
  */
-class ScheduledTaskService
+class ScheduledTaskService implements RunnableInterface
 {
     /**
      * EntityManager
@@ -45,7 +46,8 @@ class ScheduledTaskService
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        Logger $logger) {
+        Logger $logger
+    ) {
         $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository(ScheduledTask::class);
         $this->logger = $logger;
@@ -137,7 +139,7 @@ class ScheduledTaskService
         return $cron->isDue();
     }
 
-    public function run(ScheduledTask $scheduledTask)
+    public function runOne(ScheduledTask $scheduledTask)
     {
         try {
             $process = new Process($scheduledTask->getCommand());
@@ -151,5 +153,13 @@ class ScheduledTaskService
             $outputMsg = $e->getTraceAsString();
         }
         $this->logger->writeLog($exitCode, $outputMsg);
+    }
+
+    public function run($output, $application = null)
+    {
+        $tasks = $this->getScheduledTasks();
+        foreach ($tasks as $task) {
+            $this->runOne($task);
+        }
     }
 }

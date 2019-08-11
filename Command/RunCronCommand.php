@@ -95,22 +95,13 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // $taskServices = [
-        //     $this->scheduledTaskService,
-        //     $this->symfonyScheduledTaskService,
-        // ];
-        // foreach ($taskServices as $taskService) {
-        //     $tasks = $taskService->getScheduledTasks();
-        //     var_dump($tasks);
-        //     foreach ($tasks as $task) {
-        //         $taskService->run($task);
-        //     }
-        // }
-
-        //var_dump($this->symfonyScheduledTaskService->getScheduledTasks());
-        $t = $this->symfonyScheduledTaskService->getScheduledTasks();
-        foreach ($t as $key => $value) {
-            $this->symfonyScheduledTaskService->run($value);
+        /** @var RunnableInterface[] $taskServices */
+        $taskServices = [
+            $this->scheduledTaskService,
+            $this->symfonyScheduledTaskService,
+        ];
+        foreach ($taskServices as $taskService) {
+            $taskService->run($output, $this->getApplication());
         }
     }
 }

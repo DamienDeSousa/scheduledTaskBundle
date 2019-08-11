@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -61,7 +62,7 @@ class SymfonyScheduledTaskArgument
 
     public function getName()
     {
-        return $name;
+        return $this->name;
     }
 
     public function setName($name)
