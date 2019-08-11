@@ -139,13 +139,13 @@ Now you know how to install, setup and handle scheduled tasks, but you don't kno
 Just have a look in the Dades\ScheduledTaskBundle\Command\RunCronCommand class.  
 
 ```php
-if ($this->scheduledTaskService->isDue($task)) {
-    exec($task->getCommand(), $stderr, $status);
+$process = new Process($scheduledTask->getCommand());
+$exitCode = $process->run();
 ```
 
 These 2 lines to the trick.  
-The first line check if the task $task must be run now.  
-The second line execute the command.
+The first line creates the command to run in a Process.  
+The second line execute the process.
 
 ## More informations
 

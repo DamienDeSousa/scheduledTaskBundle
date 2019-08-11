@@ -10,13 +10,12 @@
 
 namespace Dades\ScheduledTaskBundle\Command;
 
+use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
+use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
+use Dades\ScheduledTaskBundle\Service\SymfonyScheduledTaskService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
-use Dades\ScheduledTaskBundle\Service\Logger;
-use Symfony\Component\Process\Process;
-use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
 
 /**
  * RunCronCommand class
@@ -52,19 +51,31 @@ class RunCronCommand extends Command
     protected $scheduledTaskService;
 
     /**
+     * Undocumented variable
+     *
+     * @var SymfonyScheduledTaskService
+     */
+    protected $symfonyScheduledTaskService;
+
+    /**
      * Constructor
      *
      * @param string               $projectdir
      * @param string               $fileLog
      * @param ScheduledTaskService $scheduledTaskService
      */
-    public function __construct(string $projectdir, string $fileLog, ScheduledTaskService $scheduledTaskService)
-    {
+    public function __construct(
+        string $projectdir,
+        string $fileLog,
+        ScheduledTaskService $scheduledTaskService,
+        SymfonyScheduledTaskService $symfonyScheduledTaskService
+    ) {
         parent::__construct();
 
         $this->projectDir = $projectdir;
         $this->fileLog = $fileLog;
         $this->scheduledTaskService = $scheduledTaskService;
+        $this->symfonyScheduledTaskService = $symfonyScheduledTaskService;
     }
 
     /**
@@ -72,8 +83,8 @@ class RunCronCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription("Run all crons.")
-            ->setHelp("Run all crons created in Symfony.");
+        $this->setDescription('Run all crons.')
+            ->setHelp('Run all crons created in Symfony.');
     }
 
     /**
@@ -84,33 +95,22 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        foreach ($this->scheduledTaskService->getScheduledTasks() as $task) {
-            if ($this->scheduledTaskService->isDue($task)) {
-                $this->runProcess($task);
-            }
+        // $taskServices = [
+        //     $this->scheduledTaskService,
+        //     $this->symfonyScheduledTaskService,
+        // ];
+        // foreach ($taskServices as $taskService) {
+        //     $tasks = $taskService->getScheduledTasks();
+        //     var_dump($tasks);
+        //     foreach ($tasks as $task) {
+        //         $taskService->run($task);
+        //     }
+        // }
+
+        //var_dump($this->symfonyScheduledTaskService->getScheduledTasks());
+        $t = $this->symfonyScheduledTaskService->getScheduledTasks();
+        foreach ($t as $key => $value) {
+            $this->symfonyScheduledTaskService->run($value);
         }
-    }
-
-    /**
-     * Run the command task
-     *
-     * @param ScheduledTask $scheduledTask
-     */
-    protected function runProcess(ScheduledTask $scheduledTask)
-    {
-        try {
-            $process = new Process($scheduledTask->getCommand());
-            $exitCode = $process->run();
-            $outputMsg = $process->getOutput() . PHP_EOL;
-
-            if (!$process->isSuccessful()) {
-                $outputMsg .= $process->getErrorOutput();
-            }
-        } catch (\Exception $e) {
-            $outputMsg = $e->getTraceAsString();
-        }
-
-        $logger = new Logger($this->projectDir, $this->fileLog);
-        $logger->writeLog($exitCode, $outputMsg);
     }
 }

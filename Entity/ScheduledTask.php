@@ -27,21 +27,21 @@ class ScheduledTask
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="command", type="string", length=255)
      */
-    private $command;
+    protected $command;
 
     /**
      * @var string
      *
      * @ORM\Column(name="cron_expression", type="string", length=20)
      */
-    private $cronExpression;
+    protected $cronExpression;
 
     /**
      * Get id

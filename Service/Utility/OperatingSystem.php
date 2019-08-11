@@ -46,7 +46,7 @@ class OperatingSystem
         'Windows',
         'WIN32',
         'WINNT',
-        'CYGWIN_NT-5.1'
+        'CYGWIN_NT-5.1',
     ];
 
     /**
@@ -62,7 +62,7 @@ class OperatingSystem
         'NetBSD',
         'OpenBSD',
         'SunOS',
-        'Unix'
+        'Unix',
     ];
 
     /**
@@ -71,7 +71,7 @@ class OperatingSystem
      * @var array
      */
     const APPLE_OS = [
-        'Darwin'
+        'Darwin',
     ];
 
     /**
@@ -85,7 +85,7 @@ class OperatingSystem
     {
         if (\in_array(self::getOS(), self::WINDOWS_OS)) {
             return self::WINDOWS;
-        } elseif (in_array(self::getOS, self::LINUX_OS)) {
+        } elseif (in_array(self::getOS(), self::LINUX_OS)) {
             return self::LINUX;
         } elseif (\in_array(self::getOS(), self::APPLE_OS)) {
             return self::APPLE;
@@ -97,7 +97,7 @@ class OperatingSystem
             return self::APPLE;
         }
 
-        throw new OSNotFoundException('The OS ['.self::getOS().'] is not found', 1, __FILE__, __LINE__);
+        throw new OSNotFoundException('The OS [' . self::getOS() . '] is not found', 1, __FILE__, __LINE__);
     }
 
     /**

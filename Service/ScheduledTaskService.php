@@ -10,12 +10,12 @@
 
 namespace Dades\ScheduledTaskBundle\Service;
 
-use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
-use Dades\ScheduledTaskBundle\Exception\BadCommandException;
-use Doctrine\ORM\EntityManagerInterface;
-use Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
-use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Cron\CronExpression;
+use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
+use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
+use Dades\ScheduledTaskBundle\Service\Logger;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Process\Process;
 
 /**
  * ScheduledTaskService class
@@ -36,15 +36,19 @@ class ScheduledTaskService
      */
     protected $repository;
 
+    protected $logger;
+
     /**
      * Entity Manager
      *
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        Logger $logger) {
         $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository(ScheduledTask::class);
+        $this->logger = $logger;
     }
 
     /**
@@ -73,6 +77,8 @@ class ScheduledTaskService
      * @param  int    $id
      *
      * @return ScheduledTask|null
+     *
+     * @throws NoSuchEntityException
      */
     public function getScheduledTask(int $id)
     {
@@ -129,5 +135,21 @@ class ScheduledTaskService
         $cron = CronExpression::factory($scheduledTask->getCronExpression());
 
         return $cron->isDue();
+    }
+
+    public function run(ScheduledTask $scheduledTask)
+    {
+        try {
+            $process = new Process($scheduledTask->getCommand());
+            $exitCode = $process->run();
+            $outputMsg = $process->getOutput() . PHP_EOL;
+
+            if (!$process->isSuccessful()) {
+                $outputMsg .= $process->getErrorOutput();
+            }
+        } catch (\Exception $e) {
+            $outputMsg = $e->getTraceAsString();
+        }
+        $this->logger->writeLog($exitCode, $outputMsg);
     }
 }
