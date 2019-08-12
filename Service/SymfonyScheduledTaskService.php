@@ -6,6 +6,7 @@ use Cron\CronExpression;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTask;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
@@ -117,6 +118,8 @@ class SymfonyScheduledTaskService implements RunnableInterface
      * Undocumented function
      *
      * @param SymfonyScheduledTask $symfonyScheduledTask
+     * @param Application           $application
+     * @param OutputInterface       $output
      */
     public function runOne($symfonyScheduledTask, $application, $output)
     {
@@ -129,9 +132,6 @@ class SymfonyScheduledTaskService implements RunnableInterface
         }
         $arrInput = new ArrayInput($parameters);
         $code = $command->run($arrInput, $output);
-        if ($code != 0) {
-            //error
-        }
     }
 
     /**

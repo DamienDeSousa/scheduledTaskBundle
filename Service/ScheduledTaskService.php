@@ -37,20 +37,16 @@ class ScheduledTaskService implements RunnableInterface
      */
     protected $repository;
 
-    protected $logger;
-
     /**
      * Entity Manager
      *
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        Logger $logger
+        EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository(ScheduledTask::class);
-        $this->logger = $logger;
     }
 
     /**
@@ -139,7 +135,7 @@ class ScheduledTaskService implements RunnableInterface
         return $cron->isDue();
     }
 
-    public function runOne(ScheduledTask $scheduledTask)
+    public function runOne(ScheduledTask $scheduledTask, $output)
     {
         try {
             $process = new Process($scheduledTask->getCommand());
@@ -152,14 +148,14 @@ class ScheduledTaskService implements RunnableInterface
         } catch (\Exception $e) {
             $outputMsg = $e->getTraceAsString();
         }
-        $this->logger->writeLog($exitCode, $outputMsg);
+        $output->writeln('[' . date('Y-m-d H:i:s') . ']: ' . $outputMsg);
     }
 
     public function run($output, $application = null)
     {
         $tasks = $this->getScheduledTasks();
         foreach ($tasks as $task) {
-            $this->runOne($task);
+            $this->runOne($task, $output);
         }
     }
 }

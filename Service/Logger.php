@@ -55,7 +55,7 @@ class Logger
         $this->fileLog = $fileLog;
         $this->folderSeparator = FolderSeparator::getSeparator();
         $this->path = $this->projectdir . $this->folderSeparator . 'var' .
-        $this->folderSeparator . 'logs' . $this->folderSeparator . $this->fileLog;
+            $this->folderSeparator . 'logs' . $this->folderSeparator . $this->fileLog;
 
         if (!file_exists($this->path)) {
             file_put_contents($this->path, '');
@@ -71,7 +71,9 @@ class Logger
     public function writeLog(int $status, $output)
     {
         if (!is_array($output) && !is_string($output)) {
-            throw new InvalidArgumentException('The $output parameter must be string or array, ' . gettype($output) . ' given.');
+            throw new InvalidArgumentException(
+                'The $output parameter must be string or array, ' . gettype($output) . ' given.'
+            );
         }
         $message = '';
         if (is_array($output)) {

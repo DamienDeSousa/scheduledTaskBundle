@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="symfony_scheduled_task")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\SymfonyScheduledTaskRepository")
  */
-class SymfonyScheduledTask extends ScheduledTask
+class SymfonyScheduledTask extends ScheduledEntity
 {
     /**
      * Undocumented variable
