@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Detect the using operating system.
  *
@@ -83,30 +84,13 @@ class OperatingSystem
      */
     public static function checkOS(): string
     {
-        if (\in_array(self::getOS(), self::WINDOWS_OS)) {
+        if (\in_array(PHP_OS, self::WINDOWS_OS)) {
             return self::WINDOWS;
-        } elseif (in_array(self::getOS(), self::LINUX_OS)) {
+        } elseif (in_array(PHP_OS, self::LINUX_OS)) {
             return self::LINUX;
-        } elseif (\in_array(self::getOS(), self::APPLE_OS)) {
+        } elseif (\in_array(PHP_OS, self::APPLE_OS)) {
             return self::APPLE;
         }
-        if (\in_array(PHP_OS, self::LINUX_OS)) {
-            return self::LINUX;
-        }
-        if (\in_array(PHP_OS, self::APPLE_OS)) {
-            return self::APPLE;
-        }
-
-        throw new OSNotFoundException('The OS [' . self::getOS() . '] is not found', 1, __FILE__, __LINE__);
-    }
-
-    /**
-     * Get the current OS
-     *
-     * @return string
-     */
-    public static function getOS()
-    {
-        return PHP_OS;
+        throw new OSNotFoundException('The OS [' . PHP_OS . '] is not found', 1, __FILE__, __LINE__);
     }
 }

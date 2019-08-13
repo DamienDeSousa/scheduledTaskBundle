@@ -46,7 +46,7 @@ class TestCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $option = $input->getOption('kkk');
-
+        $output->writeln('[' . date('Y-m-d H:i:s') . ']: ');
         if ($option) {
             echo 'im in' . "\n";
         } else {
