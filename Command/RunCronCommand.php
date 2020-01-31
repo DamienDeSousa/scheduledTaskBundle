@@ -60,20 +60,20 @@ class RunCronCommand extends Command
     /**
      * Constructor
      *
-     * @param string                      $projectDir
+     * @param string                      $projectDirectory
      * @param string                      $fileLog
      * @param ScheduledTaskService        $scheduledTaskService
      * @param SymfonyScheduledTaskService $symfonyScheduledTaskService
      */
     public function __construct(
-        string $projectDir,
+        string $projectDirectory,
         string $fileLog,
         ScheduledTaskService $scheduledTaskService,
         SymfonyScheduledTaskService $symfonyScheduledTaskService
     ) {
         parent::__construct();
 
-        $this->projectDirectory = $projectDir;
+        $this->projectDirectory = $projectDirectory;
         $this->fileLog = $fileLog;
         $this->scheduledTaskService = $scheduledTaskService;
         $this->symfonyScheduledTaskService = $symfonyScheduledTaskService;
