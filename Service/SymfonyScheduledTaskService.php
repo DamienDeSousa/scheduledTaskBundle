@@ -1,9 +1,18 @@
 <?php
+/**
+ * Service that manages the Symfony scheduled tasks.
+ *
+ * @author    Damien DE SOUSA
+ * @copyright 2020
+ */
 
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Cron\CronExpression;
+use Dades\ScheduledTaskBundle\Repository\SymfonyScheduledTaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use InvalidArgumentException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,10 +20,23 @@ use Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTask;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 
+/**
+ * Class SymfonyScheduledTaskService
+ */
 class SymfonyScheduledTaskService implements RunnableInterface
 {
+    /**
+     * The entity manager
+     *
+     * @var EntityManagerInterface
+     */
     protected $entityManager;
 
+    /**
+     * The Symfony scheduled task repository
+     *
+     * @var SymfonyScheduledTaskRepository
+     */
     protected $repository;
 
     /**
@@ -51,7 +73,7 @@ class SymfonyScheduledTaskService implements RunnableInterface
     /**
      * Return the specific scheduled task
      *
-     * @param  int    $id
+     * @param  int $id
      *
      * @return SymfonyScheduledTask
      *
@@ -101,7 +123,7 @@ class SymfonyScheduledTaskService implements RunnableInterface
     }
 
     /**
-     * Test if a command should be run now
+     * Test if a Symfony command should be run now
      *
      * @param  SymfonyScheduledTask $scheduledTask
      *
@@ -115,11 +137,13 @@ class SymfonyScheduledTaskService implements RunnableInterface
     }
 
     /**
-     * Undocumented function
+     * Run a Symfony scheduled command.
      *
      * @param SymfonyScheduledTask $symfonyScheduledTask
-     * @param Application           $application
-     * @param OutputInterface       $output
+     * @param Application          $application
+     * @param OutputInterface      $output
+     *
+     * @throws Exception
      */
     public function runOne($symfonyScheduledTask, $application, $output)
     {
@@ -132,17 +156,20 @@ class SymfonyScheduledTaskService implements RunnableInterface
         }
         $arrInput = new ArrayInput($parameters);
         $code = $command->run($arrInput, $output);
+
+        /** @todo manage exception */
     }
 
     /**
      * @inheritDoc
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function run($output, $application = null)
     {
         if ($application == null) {
-            throw new \InvalidArgumentException('$application must be set, null given.', 1);
+            throw new InvalidArgumentException('$application must be set, null given.', 1);
         }
         $tasks = $this->getScheduledTasks();
         foreach ($tasks as $task) {

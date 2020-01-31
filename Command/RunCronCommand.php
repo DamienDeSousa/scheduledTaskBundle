@@ -34,7 +34,7 @@ class RunCronCommand extends Command
      *
      * @var string
      */
-    protected $projectDir;
+    protected $projectDirectory;
 
     /**
      * The file that contains tasks logs
@@ -51,7 +51,7 @@ class RunCronCommand extends Command
     protected $scheduledTaskService;
 
     /**
-     * Undocumented variable
+     * SymfonyScheduledTaskService that manage ScheduledTask
      *
      * @var SymfonyScheduledTaskService
      */
@@ -60,19 +60,20 @@ class RunCronCommand extends Command
     /**
      * Constructor
      *
-     * @param string               $projectdir
-     * @param string               $fileLog
-     * @param ScheduledTaskService $scheduledTaskService
+     * @param string                      $projectDir
+     * @param string                      $fileLog
+     * @param ScheduledTaskService        $scheduledTaskService
+     * @param SymfonyScheduledTaskService $symfonyScheduledTaskService
      */
     public function __construct(
-        string $projectdir,
+        string $projectDir,
         string $fileLog,
         ScheduledTaskService $scheduledTaskService,
         SymfonyScheduledTaskService $symfonyScheduledTaskService
     ) {
         parent::__construct();
 
-        $this->projectDir = $projectdir;
+        $this->projectDirectory = $projectDir;
         $this->fileLog = $fileLog;
         $this->scheduledTaskService = $scheduledTaskService;
         $this->symfonyScheduledTaskService = $symfonyScheduledTaskService;

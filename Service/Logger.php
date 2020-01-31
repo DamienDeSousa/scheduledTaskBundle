@@ -8,7 +8,7 @@
 
 namespace Dades\ScheduledTaskBundle\Service;
 
-use Dades\ScheduledTaskBundle\Service\Utility\FolderSeparator;
+use InvalidArgumentException;
 
 /**
  * Logger class
@@ -27,7 +27,7 @@ class Logger
      *
      * @var string
      */
-    protected $projectdir;
+    protected $projectDirectory;
 
     /**
      * The full path, the project dir plus the file name
@@ -37,25 +37,17 @@ class Logger
     protected $path;
 
     /**
-     * Contains the right folder separator for the current OS
-     *
-     * @var string
-     */
-    protected $folderSeparator;
-
-    /**
      * Constructor
      *
-     * @param string $projectdir
+     * @param string $projectDirectory
      * @param string $fileLog
      */
-    public function __construct(string $projectdir, string $fileLog)
+    public function __construct(string $projectDirectory, string $fileLog)
     {
-        $this->projectdir = $projectdir;
+        $this->projectDirectory = $projectDirectory;
         $this->fileLog = $fileLog;
-        $this->folderSeparator = FolderSeparator::getSeparator();
-        $this->path = $this->projectdir . $this->folderSeparator . 'var' .
-            $this->folderSeparator . 'logs' . $this->folderSeparator . $this->fileLog;
+        $this->path = $this->projectDirectory . DIRECTORY_SEPARATOR . 'var' .
+            DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $this->fileLog;
 
         if (!file_exists($this->path)) {
             file_put_contents($this->path, '');
@@ -96,7 +88,7 @@ class Logger
      *
      * @return string
      */
-    public function stringifyOutput(array $output): string
+    protected function stringifyOutput(array $output): string
     {
         $result = '';
         foreach ($output as $key => $value) {

@@ -13,8 +13,10 @@ namespace Dades\ScheduledTaskBundle\Service;
 use Cron\CronExpression;
 use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
-use Dades\ScheduledTaskBundle\Service\Logger;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 
@@ -33,7 +35,7 @@ class ScheduledTaskService implements RunnableInterface
     /**
      * ScheduledTask repository
      *
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var ObjectRepository
      */
     protected $repository;
 
@@ -62,7 +64,7 @@ class ScheduledTaskService implements RunnableInterface
     /**
      * Return all the scheduled tasks
      *
-     * @return ScheduledTask[]
+     * @return object[]
      */
     public function getScheduledTasks()
     {
@@ -74,7 +76,7 @@ class ScheduledTaskService implements RunnableInterface
      *
      * @param  int    $id
      *
-     * @return ScheduledTask|null
+     * @return ScheduledTask|object
      *
      * @throws NoSuchEntityException
      */
@@ -135,10 +137,16 @@ class ScheduledTaskService implements RunnableInterface
         return $cron->isDue();
     }
 
+    /**
+     * Run a scheduled task
+     *
+     * @param ScheduledTask|object $scheduledTask
+     * @param OutputInterface      $output
+     */
     public function runOne(ScheduledTask $scheduledTask, $output)
     {
         try {
-            $process = new Process($scheduledTask->getCommand());
+            $process = new Process([$scheduledTask->getCommand()]);
             $exitCode = $process->run();
             $outputMsg = $process->getOutput() . PHP_EOL;
 
@@ -151,6 +159,12 @@ class ScheduledTaskService implements RunnableInterface
         $output->writeln('[' . date('Y-m-d H:i:s') . ']: ' . $outputMsg);
     }
 
+    /**
+     * Run all scheduled tasks
+     *
+     * @param OutputInterface  $output
+     * @param Application|null $application
+     */
     public function run($output, $application = null)
     {
         $tasks = $this->getScheduledTasks();
