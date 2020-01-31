@@ -28,7 +28,7 @@ class SymfonyScheduledTaskArgument
     protected $id;
 
     /**
-     * Undocumented variable
+     * Name of the argument
      *
      * @var string
      *
@@ -37,7 +37,7 @@ class SymfonyScheduledTaskArgument
     protected $name;
 
     /**
-     * Undocumented variable
+     * Value of the argument
      *
      * @var string
      *
@@ -46,7 +46,7 @@ class SymfonyScheduledTaskArgument
     protected $value;
 
     /**
-     * XXX
+     * The Symfony cheduled task of which the argument is applied for
      *
      * @var SymfonyScheduledTask
      *
@@ -55,36 +55,70 @@ class SymfonyScheduledTaskArgument
      */
     protected $symfonyScheduledTask;
 
+    /**
+     * Get the ID of the Symfony scheduled task argument
+     *
+     * @return int
+     */
     public function getId()
     {
-        return $id;
+        return $this->id;
     }
 
+    /**
+     * Get the name of the Symfony scheduled task argument
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function setName($name)
+    /**
+     * Set the name of the Symfony scheduled task argument
+     *
+     * @param string $name
+     */
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
+    /**
+     * Get the value of the Symfony scheduled task argument
+     *
+     * @return string
+     */
     public function getValue()
     {
         return $this->value;
     }
 
-    public function setValue($value)
+    /**
+     * Set the value of the Symfony scheduled task argument
+     * @param $value
+     */
+    public function setValue(string $value)
     {
         $this->value = $value;
     }
 
+    /**
+     * Get the Symfony scheduled task linked to this argument
+     *
+     * @return SymfonyScheduledTask
+     */
     public function getSymfonyScheduledTask()
     {
         return $this->symfonyScheduledTask;
     }
 
+    /**
+     * Set the Symfony scheduled task linked to this argument
+     *
+     * @param $symfonyScheduledTask
+     */
     public function setSymfonyScheduledTask($symfonyScheduledTask)
     {
         $this->symfonyScheduledTask = $symfonyScheduledTask;

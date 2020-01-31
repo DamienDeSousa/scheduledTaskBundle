@@ -75,7 +75,7 @@ class SymfonyScheduledTaskService implements RunnableInterface
      *
      * @param  int $id
      *
-     * @return SymfonyScheduledTask
+     * @return SymfonyScheduledTask|object
      *
      * @throws NoSuchEntityException
      */

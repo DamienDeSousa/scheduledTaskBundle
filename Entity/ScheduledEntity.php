@@ -47,7 +47,7 @@ abstract class ScheduledEntity
      *
      * @param string cronExpression
      *
-     * @return ScheduledTask
+     * @return ScheduledEntity
      */
     public function setCronExpression($cronExpression)
     {

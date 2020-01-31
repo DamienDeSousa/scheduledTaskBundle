@@ -10,7 +10,7 @@
 
 namespace Dades\ScheduledTaskBundle\Command;
 
-use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
+use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
 use Dades\ScheduledTaskBundle\Service\SymfonyScheduledTaskService;
 use Symfony\Component\Console\Command\Command;

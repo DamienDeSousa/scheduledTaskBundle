@@ -82,7 +82,7 @@ class Logger
     }
 
     /**
-     * Transforme an array to a string
+     * Transform an array to a string
      *
      * @param  array  $output
      *
