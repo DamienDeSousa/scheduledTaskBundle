@@ -1,12 +1,22 @@
 <?php
-
+/**
+ * Defines all the required attributes that a scheduled task must have.
+ *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ * @copyright 2020
+ */
 namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * ScheduledEntity class
+ */
 abstract class ScheduledEntity
 {
     /**
+     * Unique ID
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -16,6 +26,8 @@ abstract class ScheduledEntity
     protected $id;
 
     /**
+     * Unix cron expression
+     *
      * @var string
      *
      * @ORM\Column(name="cron_expression", type="string", length=20)

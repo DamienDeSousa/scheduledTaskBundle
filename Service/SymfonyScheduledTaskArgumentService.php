@@ -32,7 +32,7 @@ class SymfonyScheduledTaskArgumentService
     protected $repository;
 
     /**
-     * Entity Manager
+     * Constructor
      *
      * @param EntityManagerInterface $entityManager
      */

@@ -1,7 +1,9 @@
 <?php
-
 /**
+ * Arguments used for scheduled tasks.
  *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ * @copyright 2020
  */
 
 namespace Dades\ScheduledTaskBundle\Entity;

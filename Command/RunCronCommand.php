@@ -3,8 +3,7 @@
 /**
  * Run all defined cron in Symfony.
  *
- * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
- *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2019
  */
 

@@ -13,12 +13,12 @@ namespace Dades\ScheduledTaskBundle\Service;
 use Cron\CronExpression;
 use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
+use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
-use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 
 /**
  * ScheduledTaskService class
@@ -74,7 +74,7 @@ class ScheduledTaskService implements RunnableInterface
     /**
      * Return the specific scheduled task
      *
-     * @param  int    $id
+     * @param  int $id
      *
      * @return ScheduledTask|object
      *

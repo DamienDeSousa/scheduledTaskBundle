@@ -46,6 +46,7 @@ class BadCommandException extends \Exception
      */
     public function getExplicitMessage()
     {
-        return "The command [$this->command] failed: $this->message in $this->file at line $this->line".PHP_EOL.$this->getTraceAsString().PHP_EOL;
+        return 'The command [' . $this->command . '] failed: ' . $this->message . 'in $this->file at line $this->line' .
+        PHP_EOL . $this->getTraceAsString() . PHP_EOL;
     }
 }

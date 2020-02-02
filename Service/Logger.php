@@ -47,7 +47,7 @@ class Logger
         $this->projectDirectory = $projectDirectory;
         $this->fileLog = $fileLog;
         $this->path = $this->projectDirectory . DIRECTORY_SEPARATOR . 'var' .
-            DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $this->fileLog;
+        DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $this->fileLog;
 
         if (!file_exists($this->path)) {
             file_put_contents($this->path, '');
@@ -57,7 +57,7 @@ class Logger
     /**
      * Write log with the status code and the message to write
      *
-     * @param  int    $status
+     * @param  int          $status
      * @param  array|string $output
      */
     public function writeLog(int $status, $output)
