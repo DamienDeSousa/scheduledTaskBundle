@@ -7,15 +7,15 @@
  */
 namespace Dades\ScheduledTaskBundle\Service;
 
-use Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTaskArgument;
+use Dades\ScheduledTaskBundle\Entity\ScheduledTaskParameter;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class SymfonyScheduledTaskArgumentService
+ * Class ScheduledTaskParameterService
  */
-class SymfonyScheduledTaskArgumentService
+class ScheduledTaskParameterService
 {
     /**
      * EntityManager
@@ -39,25 +39,25 @@ class SymfonyScheduledTaskArgumentService
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(SymfonyScheduledTaskArgument::class);
+        $this->repository = $this->entityManager->getRepository(ScheduledTaskParameter::class);
     }
 
     /**
-     * Create a new SymfonyScheduledTaskArgument
+     * Create a new ScheduledTaskParameter
      *
-     * @return SymfonyScheduledTaskArgument
+     * @return ScheduledTaskParameter
      */
     public function create()
     {
-        return new SymfonyScheduledTaskArgument();
+        return new ScheduledTaskParameter();
     }
 
     /**
-     * Get all SymfonyScheduledTaskArgument
+     * Get all ScheduledTaskParameter
      *
-     * @return SymfonyScheduledTaskArgument[]
+     * @return ScheduledTaskParameter[]
      */
-    public function getSymfonyScheduledTaskArguments()
+    public function getScheduledTaskParameters()
     {
         return $this->repository->findAll();
     }
@@ -67,38 +67,38 @@ class SymfonyScheduledTaskArgumentService
      *
      * @param $id
      *
-     * @return SymfonyScheduledTaskArgument
+     * @return SymfonyScheduledTaskArgScheduledTaskParameterument
      *
      * @throws NoSuchEntityException
      */
-    public function getSymfonyScheduledTaskArgument($id)
+    public function getScheduledTaskParameter($id)
     {
-        $symfonyScheduledTaskArgument = $this->repository->find($id);
+        $scheduledTaskParameter = $this->repository->find($id);
 
-        if (!$symfonyScheduledTaskArgument) {
+        if (!$scheduledTaskParameter) {
             throw new NoSuchEntityException("No scheduled task found for id [$id]", 1);
         }
 
-        return $symfonyScheduledTaskArgument;
+        return $scheduledTaskParameter;
     }
 
     /**
      * Save a given Symfony scheduled task argument
      *
-     * @param $symfonyScheduledTaskArgument
+     * @param $scheduledTaskParameter
      */
-    public function save($symfonyScheduledTaskArgument)
+    public function save($scheduledTaskParameter)
     {
-        $this->entityManager->persist($symfonyScheduledTaskArgument);
+        $this->entityManager->persist($scheduledTaskParameter);
         $this->entityManager->flush();
     }
 
     /**
      * Update a Symfony scheduled task argument
      *
-     * @param $symfonyScheduledTaskArgument
+     * @param $scheduledTaskParameter
      */
-    public function update($symfonyScheduledTaskArgument)
+    public function update($ScheduledTaskParameter)
     {
         $this->entityManager->flush();
     }
@@ -106,11 +106,11 @@ class SymfonyScheduledTaskArgumentService
     /**
      * Remove a given Symfony scheduled task argument
      *
-     * @param $symfonyScheduledTaskArgument
+     * @param $scheduledTaskParameter
      */
-    public function delete($symfonyScheduledTaskArgument)
+    public function delete($scheduledTaskParameter)
     {
-        $this->entityManager->remove($symfonyScheduledTaskArgument);
+        $this->entityManager->remove($scheduledTaskParameter);
         $this->entityManager->flush();
     }
 }

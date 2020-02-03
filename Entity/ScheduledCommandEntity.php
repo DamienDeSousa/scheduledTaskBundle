@@ -19,7 +19,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      * @var ArrayCollection
      *
      * @ORM\OneToMany(
-     *  targetEntity="Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTaskArgument",
+     *  targetEntity="Dades\ScheduledTaskBundle\Entity\ScheduledTaskParameter",
      *  mappedBy="symfonyScheduledTask",
      *  cascade={"persist", "remove"})
      */
@@ -46,9 +46,9 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     /**
      * Add an argument to the Symfony scheduled task
      *
-     * @param SymfonyScheduledTaskArgument $argument
+     * @param ScheduledTaskParameter $argument
      */
-    public function addArgument(SymfonyScheduledTaskArgument $argument)
+    public function addArgument(ScheduledTaskParameter $argument)
     {
         $argument->setSymfonyScheduledTask($this);
         $this->arguments[] = $argument;
@@ -57,9 +57,9 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     /**
      * Remove an argument to the Symfony scheduled task
      *
-     * @param SymfonyScheduledTaskArgument $argument
+     * @param ScheduledTaskParameter $argument
      */
-    public function removeArgument(SymfonyScheduledTaskArgument $argument)
+    public function removeArgument(ScheduledTaskParameter $argument)
     {
         $argument->setSymfonyScheduledTask(null);
         $this->arguments->removeElement($argument);

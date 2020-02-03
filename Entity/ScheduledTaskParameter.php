@@ -11,15 +11,15 @@ namespace Dades\ScheduledTaskBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SymfonyScheduledTaskArgument class
+ * ScheduledTaskParameter class
  *
  * @ORM\Table(name="symfony_scheduled_task_argument")
- * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\SymfonyScheduledTaskArgumentRepository")
+ * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledTaskParameterRepository")
  */
-class SymfonyScheduledTaskArgument
+class ScheduledTaskParameter
 {
     /**
-     * id of the SymfonyScheduledTaskArgument entity
+     * id of the ScheduledTaskParameter entity
      *
      * @var int
      *

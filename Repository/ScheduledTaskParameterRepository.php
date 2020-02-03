@@ -10,9 +10,9 @@ namespace Dades\ScheduledTaskBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class SymfonyScheduledTaskArgumentRepository
+ * Class ScheduledTaskParameterRepository
  */
-class SymfonyScheduledTaskArgumentRepository extends EntityRepository
+class ScheduledTaskParameterRepository extends EntityRepository
 {
 
 }
