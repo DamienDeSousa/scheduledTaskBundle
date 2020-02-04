@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Arguments used for scheduled tasks.
  *
@@ -99,7 +100,8 @@ class ScheduledTaskParameter
 
     /**
      * Set the value of the Symfony scheduled task argument
-     * @param $value
+     *
+     * @param string $value
      */
     public function setValue(string $value)
     {
@@ -119,7 +121,7 @@ class ScheduledTaskParameter
     /**
      * Set the Symfony scheduled task linked to this argument
      *
-     * @param $symfonyScheduledTask
+     * @param ScheduledSymfonyCommand|null $symfonyScheduledTask
      */
     public function setSymfonyScheduledTask($symfonyScheduledTask)
     {

@@ -54,7 +54,7 @@ abstract class ScheduledEntityService
      *
      * @return mixed
      */
-    public abstract function create();
+    abstract public function create();
 
     /**
      * Return all the scheduled entities
@@ -133,38 +133,38 @@ abstract class ScheduledEntityService
     }
 
 //    /**
-//     * Run a scheduled task
-//     *
-//     * @param ScheduledEntity|object $scheduledEntity
-//     * @param OutputInterface        $output
-//     */
-//    public function runOne(ScheduledEntity $scheduledEntity, $output)
-//    {
-//        try {
-//            $process = new Process([$scheduledEntity->getCommand()]);
-//            $exitCode = $process->run();
-//            $outputMsg = $process->getOutput() . PHP_EOL;
-//
-//            if (!$process->isSuccessful()) {
-//                $outputMsg .= $process->getErrorOutput();
-//            }
-//        } catch (\Exception $e) {
-//            $outputMsg = $e->getTraceAsString();
-//        }
-//        $output->writeln('[' . date('Y-m-d H:i:s') . ']: ' . $outputMsg);
-//    }
-//
-//    /**
-//     * Run all scheduled tasks
-//     *
-//     * @param OutputInterface  $output
-//     * @param Application|null $application
-//     */
-//    public function run($output, $application = null)
-//    {
-//        $tasks = $this->getScheduledEntities();
-//        foreach ($tasks as $task) {
-//            $this->runOne($task, $output);
-//        }
-//    }
+    //     * Run a scheduled task
+    //     *
+    //     * @param ScheduledEntity|object $scheduledEntity
+    //     * @param OutputInterface        $output
+    //     */
+    //    public function runOne(ScheduledEntity $scheduledEntity, $output)
+    //    {
+    //        try {
+    //            $process = new Process([$scheduledEntity->getCommand()]);
+    //            $exitCode = $process->run();
+    //            $outputMsg = $process->getOutput() . PHP_EOL;
+    //
+    //            if (!$process->isSuccessful()) {
+    //                $outputMsg .= $process->getErrorOutput();
+    //            }
+    //        } catch (\Exception $e) {
+    //            $outputMsg = $e->getTraceAsString();
+    //        }
+    //        $output->writeln('[' . date('Y-m-d H:i:s') . ']: ' . $outputMsg);
+    //    }
+    //
+    //    /**
+    //     * Run all scheduled tasks
+    //     *
+    //     * @param OutputInterface  $output
+    //     * @param Application|null $application
+    //     */
+    //    public function run($output, $application = null)
+    //    {
+    //        $tasks = $this->getScheduledEntities();
+    //        foreach ($tasks as $task) {
+    //            $this->runOne($task, $output);
+    //        }
+    //    }
 }

@@ -9,7 +9,6 @@
 
 namespace Dades\ScheduledTaskBundle\Command;
 
-use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 use Dades\ScheduledTaskBundle\Service\ScheduledCommandService;
 use Dades\ScheduledTaskBundle\Service\ScheduledEntityService;
 use Dades\ScheduledTaskBundle\Service\SymfonyScheduledTaskService;
@@ -102,7 +101,7 @@ class RunCronCommand extends Command
             $this->symfonyScheduledTaskService,
         ];
         foreach ($taskServices as $taskService) {
-            $taskService->runAllScheduledCommand($output, $this->getApplication());
+            $taskService->runAllScheduledCommand($output);
         }
     }
 }

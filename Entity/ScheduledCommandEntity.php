@@ -26,6 +26,13 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     protected $arguments;
 
     /**
+     * The command name
+     *
+     * @var string
+     */
+    protected $commandName;
+
+    /**
      * ScheduledCommandEntity constructor.
      */
     public function __construct()
@@ -63,5 +70,29 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     {
         $argument->setSymfonyScheduledTask(null);
         $this->arguments->removeElement($argument);
+    }
+
+    /**
+     * Get the command name
+     *
+     * @return  string
+     */
+    public function getCommandName()
+    {
+        return $this->commandName;
+    }
+
+    /**
+     * Set the command name
+     *
+     * @param  string  $commandName  The command name
+     *
+     * @return  self
+     */
+    public function setCommandName(string $commandName)
+    {
+        $this->commandName = $commandName;
+
+        return $this;
     }
 }
