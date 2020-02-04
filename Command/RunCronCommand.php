@@ -10,7 +10,8 @@
 namespace Dades\ScheduledTaskBundle\Command;
 
 use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
-use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
+use Dades\ScheduledTaskBundle\Service\ScheduledCommandService;
+use Dades\ScheduledTaskBundle\Service\ScheduledEntityService;
 use Dades\ScheduledTaskBundle\Service\SymfonyScheduledTaskService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -43,9 +44,9 @@ class RunCronCommand extends Command
     protected $fileLog;
 
     /**
-     * ScheduledTaskService that manage ScheduledTask
+     * ScheduledEntityService that manage ScheduledTask
      *
-     * @var ScheduledTaskService
+     * @var ScheduledEntityService
      */
     protected $scheduledTaskService;
 
@@ -61,13 +62,13 @@ class RunCronCommand extends Command
      *
      * @param string                      $projectDirectory
      * @param string                      $fileLog
-     * @param ScheduledTaskService        $scheduledTaskService
+     * @param ScheduledEntityService      $scheduledTaskService
      * @param SymfonyScheduledTaskService $symfonyScheduledTaskService
      */
     public function __construct(
         string $projectDirectory,
         string $fileLog,
-        ScheduledTaskService $scheduledTaskService,
+        ScheduledEntityService $scheduledTaskService,
         SymfonyScheduledTaskService $symfonyScheduledTaskService
     ) {
         parent::__construct();
@@ -95,13 +96,13 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var RunnableInterface[] $taskServices */
+        /** @var ScheduledCommandService[] $taskServices */
         $taskServices = [
             $this->scheduledTaskService,
             $this->symfonyScheduledTaskService,
         ];
         foreach ($taskServices as $taskService) {
-            $taskService->run($output, $this->getApplication());
+            $taskService->runAllScheduledCommand($output, $this->getApplication());
         }
     }
 }

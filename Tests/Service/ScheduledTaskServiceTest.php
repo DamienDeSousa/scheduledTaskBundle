@@ -2,7 +2,7 @@
 
 namespace Dades\ScheduledTaskBundle\Tests\Service;
 
-use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
+use Dades\ScheduledTaskBundle\Service\ScheduledEntityService;
 use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -34,7 +34,7 @@ class ScheduledTaskServiceTest extends KernelTestCase
      */
     public function testCreate()
     {
-        $scheduledTaskService = new ScheduledTaskService($this->entityManager);
+        $scheduledTaskService = new ScheduledEntityService($this->entityManager);
         $scheduledTask = $scheduledTaskService->create();
 
         $this->assertNotNull($scheduledTask);
@@ -45,7 +45,7 @@ class ScheduledTaskServiceTest extends KernelTestCase
      */
     public function testSave()
     {
-        $scheduledTaskService = new ScheduledTaskService($this->entityManager);
+        $scheduledTaskService = new ScheduledEntityService($this->entityManager);
         $scheduledTask = $scheduledTaskService->create();
         $scheduledTask->setCronExpression('*/5 * * * *');
         $scheduledTask->setCommand('php -v');
@@ -59,7 +59,7 @@ class ScheduledTaskServiceTest extends KernelTestCase
      */
     public function testIsDue()
     {
-        $scheduledTaskService = new ScheduledTaskService($this->entityManager);
+        $scheduledTaskService = new ScheduledEntityService($this->entityManager);
         $scheduledTask = $scheduledTaskService->create();
         $scheduledTask->setCronExpression('* * * * *');
         $scheduledTask->setCommand('php -v');
@@ -91,9 +91,9 @@ class ScheduledTaskServiceTest extends KernelTestCase
             ->getRepository(ScheduledTask::class);
         $scheduledTask = $repository->findOneBy(['command' => 'php -v']);
         $id = $scheduledTask->getId();
-        $scheduledTaskService = new ScheduledTaskService($this->entityManager);
+        $scheduledTaskService = new ScheduledEntityService($this->entityManager);
         $scheduledTaskService->delete($scheduledTask);
-        $removedTask = $scheduledTaskService->getScheduledTask($id);
+        $removedTask = $scheduledTaskService->getScheduledEntity($id);
     }
 
     protected function tearDown()
