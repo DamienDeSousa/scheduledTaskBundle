@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ScheduledEntity class
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="scheduled_entity")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorEntry( value = "scheduled_entity" )
  */
 abstract class ScheduledEntity
 {

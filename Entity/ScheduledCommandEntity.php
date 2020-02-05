@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="scheduled_command_entity")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository")
+ * @ORM\DiscriminatorEntry(value="scheduled_command_entity")
  */
 abstract class ScheduledCommandEntity extends ScheduledEntity
 {
@@ -23,12 +24,14 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      *  mappedBy="symfonyScheduledTask",
      *  cascade={"persist", "remove"})
      */
-    protected $arguments;
+    protected $parameters;
 
     /**
      * The command name
      *
      * @var string
+     *
+     * @ORM\Column(type="string", name="command_name")
      */
     protected $commandName;
 
@@ -37,7 +40,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      */
     public function __construct()
     {
-        $this->arguments = new ArrayCollection();
+        $this->parameters = new ArrayCollection();
     }
 
     /**
@@ -45,9 +48,9 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      *
      * @return ArrayCollection
      */
-    public function getArguments()
+    public function getParameters()
     {
-        return $this->arguments;
+        return $this->parameters;
     }
 
     /**
@@ -55,10 +58,10 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      *
      * @param ScheduledTaskParameter $argument
      */
-    public function addArgument(ScheduledTaskParameter $argument)
+    public function addParameter(ScheduledTaskParameter $argument)
     {
         $argument->setSymfonyScheduledTask($this);
-        $this->arguments[] = $argument;
+        $this->parameters[] = $argument;
     }
 
     /**
@@ -66,10 +69,10 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      *
      * @param ScheduledTaskParameter $argument
      */
-    public function removeArgument(ScheduledTaskParameter $argument)
+    public function removeParameter(ScheduledTaskParameter $argument)
     {
         $argument->setSymfonyScheduledTask(null);
-        $this->arguments->removeElement($argument);
+        $this->parameters->removeElement($argument);
     }
 
     /**
