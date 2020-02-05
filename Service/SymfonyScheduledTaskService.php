@@ -23,7 +23,7 @@ use Dades\ScheduledTaskBundle\Service\Generic\RunnableInterface;
 /**
  * Class SymfonyScheduledTaskService
  */
-class SymfonyScheduledTaskService implements RunnableInterface
+class SymfonyScheduledTaskService
 {
     /**
      * The entity manager
@@ -47,27 +47,23 @@ class SymfonyScheduledTaskService implements RunnableInterface
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(SymfonyScheduledTask::class);
+//        $this->repository = $this->entityManager->getRepository(SymfonyScheduledTask::class);
     }
 
     /**
      * Create a new ScheduledTask
      *
-     * @return SymfonyScheduledTask
      */
-    public function create(): SymfonyScheduledTask
+    public function create()
     {
-        return new SymfonyScheduledTask();
     }
 
     /**
      * Return all the scheduled tasks
      *
-     * @return SymfonyScheduledTask[]
      */
     public function getScheduledTasks()
     {
-        return $this->repository->findAll();
     }
 
     /**
@@ -75,7 +71,6 @@ class SymfonyScheduledTaskService implements RunnableInterface
      *
      * @param  int $id
      *
-     * @return SymfonyScheduledTask|object
      *
      * @throws NoSuchEntityException
      */
@@ -87,15 +82,14 @@ class SymfonyScheduledTaskService implements RunnableInterface
             throw new NoSuchEntityException("No scheduled task found for id [$id]", 1);
         }
 
-        return $scheduledTask;
     }
 
     /**
      * Save a scheduled task
      *
-     * @param  SymfonyScheduledTask $scheduledTask
+     * @param  $scheduledTask
      */
-    public function save(SymfonyScheduledTask $scheduledTask)
+    public function save($scheduledTask)
     {
         $this->entityManager->persist($scheduledTask);
         $this->entityManager->flush();
@@ -104,9 +98,9 @@ class SymfonyScheduledTaskService implements RunnableInterface
     /**
      * Update a scheduled task
      *
-     * @param  SymfonyScheduledTask $scheduledTask
+     * @param  $scheduledTask
      */
-    public function update(SymfonyScheduledTask $scheduledTask)
+    public function update( $scheduledTask)
     {
         $this->entityManager->flush();
     }
@@ -114,9 +108,9 @@ class SymfonyScheduledTaskService implements RunnableInterface
     /**
      * Delete a scheduled task
      *
-     * @param  SymfonyScheduledTask $scheduledTask
+     * @param  $scheduledTask
      */
-    public function delete(SymfonyScheduledTask $scheduledTask)
+    public function delete($scheduledTask)
     {
         $this->entityManager->remove($scheduledTask);
         $this->entityManager->flush();
@@ -125,37 +119,32 @@ class SymfonyScheduledTaskService implements RunnableInterface
     /**
      * Test if a Symfony command should be run now
      *
-     * @param  SymfonyScheduledTask $scheduledTask
+     * @param  $scheduledTask
      *
-     * @return bool
      */
-    public function isDue(SymfonyScheduledTask $scheduledTask): bool
+    public function isDue($scheduledTask)
     {
-        $cron = CronExpression::factory($scheduledTask->getCronExpression());
-
-        return $cron->isDue();
     }
 
     /**
      * Run a Symfony scheduled command.
      *
-     * @param SymfonyScheduledTask $symfonyScheduledTask
      * @param Application          $application
      * @param OutputInterface      $output
      *
      * @throws Exception
      */
-    public function runOne($symfonyScheduledTask, $application, $output)
+    public function runOne($application, $output)
     {
-        $command = $application->find($symfonyScheduledTask->getName());
-        $parameters = [
-            'command' => $symfonyScheduledTask->getName(),
-        ];
-        foreach ($symfonyScheduledTask->getArguments() as $argument) {
-            $parameters[$argument->getName()] = $argument->getValue();
-        }
-        $arrInput = new ArrayInput($parameters);
-        $code = $command->run($arrInput, $output);
+//        $command = $application->find($symfonyScheduledTask->getName());
+//        $parameters = [
+//            'command' => $symfonyScheduledTask->getName(),
+//        ];
+//        foreach ($symfonyScheduledTask->getArguments() as $argument) {
+//            $parameters[$argument->getName()] = $argument->getValue();
+//        }
+//        $arrInput = new ArrayInput($parameters);
+//        $code = $command->run($arrInput, $output);
 
         /** @todo manage exception */
     }
@@ -168,12 +157,12 @@ class SymfonyScheduledTaskService implements RunnableInterface
      */
     public function run($output, $application = null)
     {
-        if ($application == null) {
-            throw new InvalidArgumentException('$application must be set, null given.', 1);
-        }
-        $tasks = $this->getScheduledTasks();
-        foreach ($tasks as $task) {
-            $this->runOne($task, $application, $output);
-        }
+//        if ($application == null) {
+//            throw new InvalidArgumentException('$application must be set, null given.', 1);
+//        }
+//        $tasks = $this->getScheduledTasks();
+//        foreach ($tasks as $task) {
+//            $this->runOne($task, $application, $output);
+//        }
     }
 }
