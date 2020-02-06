@@ -7,8 +7,15 @@
  */
 namespace Dades\ScheduledTaskBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
+
 /**
  * ScheduledSymfonyCommand class
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="scheduled_symfony_command_entity")
+ * @DiscriminatorEntry(value="scheduled_symfony_command_entity")
  */
 class ScheduledSymfonyCommand extends ScheduledCommandEntity
 {

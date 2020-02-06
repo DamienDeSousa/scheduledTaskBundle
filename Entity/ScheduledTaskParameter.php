@@ -51,9 +51,9 @@ class ScheduledTaskParameter
     /**
      * The Symfony cheduled task of which the argument is applied for
      *
-     * @var SymfonyScheduledTask
+     * @var ScheduledSymfonyCommand
      *
-     * @ORM\ManyToOne(targetEntity="Dades\ScheduledTaskBundle\Entity\SymfonyScheduledTask", inversedBy="symfonyArguments")
+     * @ORM\ManyToOne(targetEntity="Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommand", inversedBy="symfonyArguments")
      * @ORM\JoinColumn(name="symfony_scheduled_task_id", referencedColumnName="id")
      */
     protected $symfonyScheduledTask;
@@ -111,7 +111,7 @@ class ScheduledTaskParameter
     /**
      * Get the Symfony scheduled task linked to this argument
      *
-     * @return SymfonyScheduledTask
+     * @return ScheduledSymfonyCommand
      */
     public function getSymfonyScheduledTask()
     {
