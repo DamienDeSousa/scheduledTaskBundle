@@ -4,13 +4,14 @@ namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 
 /**
  * ScheduledCommandEntity class
  *
  * @ORM\Table(name="scheduled_command_entity")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository")
- * @ORM\DiscriminatorEntry(value="scheduled_command_entity")
+ * @DiscriminatorEntry("scheduled_command_entity")
  */
 abstract class ScheduledCommandEntity extends ScheduledEntity
 {
@@ -60,7 +61,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      */
     public function addParameter(ScheduledTaskParameter $argument)
     {
-        $argument->setSymfonyScheduledTask($this);
+//        $argument->setSymfonyScheduledTask($this);
         $this->parameters[] = $argument;
     }
 

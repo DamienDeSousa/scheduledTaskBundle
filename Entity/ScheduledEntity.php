@@ -8,15 +8,16 @@
 namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
+use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorParent;
 
 /**
  * ScheduledEntity class
  *
  * @ORM\Entity
  * @ORM\Table(name="scheduled_entity")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorEntry( value = "scheduled_entity" )
+ * @DiscriminatorParent()
+ * @DiscriminatorEntry("self")
  */
 abstract class ScheduledEntity
 {

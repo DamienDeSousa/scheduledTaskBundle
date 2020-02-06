@@ -23,7 +23,8 @@
         "symfony/console": "^3.4",
         "dragonmantank/cron-expression": "^2.3",
         "doctrine/orm": "^2.5",
-        "symfony/process": "^3.4"
+        "symfony/process": "^3.4",
+        "levelab/doctrine-discriminator-bundle": "^0.2.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0"
