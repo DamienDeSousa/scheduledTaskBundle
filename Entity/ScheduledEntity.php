@@ -17,6 +17,7 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorParent;
  * @ORM\Entity
  * @ORM\Table(name="scheduled_entity")
  * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorParent()
  * @DiscriminatorEntry("self")
  */
