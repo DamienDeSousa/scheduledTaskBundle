@@ -18,7 +18,8 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorParent;
  * @ORM\Table(name="scheduled_entity")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"scheduled_command_entity"="ScheduledCommandEntity"})
+ * @DiscriminatorParent()
+ * @DiscriminatorEntry("self")
  */
 abstract class ScheduledEntity
 {

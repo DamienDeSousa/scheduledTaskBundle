@@ -11,6 +11,8 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
  *
  * @ORM\Table(name="scheduled_command_entity")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorEntry("scheduled_command_entity")
  */
 abstract class ScheduledCommandEntity extends ScheduledEntity
