@@ -8,7 +8,6 @@
 namespace Dades\ScheduledTaskBundle\Command;
 
 use Dades\ScheduledTaskBundle\Service\ScheduledCommandService;
-use Dades\ScheduledTaskBundle\Service\ScheduledEntityService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -58,11 +57,11 @@ class RunCronCommand extends Command
         string $fileLog,
         array $scheduledCommandServices
     ) {
-        parent::__construct();
-
         $this->projectDirectory = $projectDirectory;
         $this->fileLog = $fileLog;
         $this->scheduledCommandServices = $scheduledCommandServices;
+
+        parent::__construct();
     }
 
     /**
