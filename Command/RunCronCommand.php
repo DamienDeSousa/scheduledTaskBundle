@@ -23,7 +23,7 @@ class RunCronCommand extends Command
      *
      * @var string
      */
-    protected static $defaultName = 'scheduled:command:run';
+    protected static $defaultName = 'dades:scheduled-command:run';
 
     /**
      * The project root directory.
