@@ -21,18 +21,6 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 abstract class ScheduledCommandEntity extends ScheduledEntity
 {
     /**
-     * The parameters used for this task.
-     *
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(
-     *  targetEntity="Dades\ScheduledTaskBundle\Entity\ScheduledTaskParameter",
-     *  mappedBy="symfonyScheduledCommand",
-     *  cascade={"persist", "remove"})
-     */
-    protected $parameters;
-
-    /**
      * The command name.
      *
      * @var string
@@ -42,51 +30,20 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     protected $commandName;
 
     /**
+     * The working directory of the command.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", name="working_directory", nullable=true)
+     */
+    protected $workingDirectory;
+
+    /**
      * ScheduledCommandEntity constructor.
      */
     public function __construct()
     {
         parent::__construct();
-
-        $this->parameters = new ArrayCollection();
-    }
-
-    /**
-     * Get the arguments of the scheduled command.
-     *
-     * @return ArrayCollection
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
-
-    /**
-     * Add an argument to the scheduled command.
-     *
-     * @param ScheduledTaskParameter $argument
-     *
-     * @return bool|true
-     */
-    public function addParameter(ScheduledTaskParameter $argument)
-    {
-        $argument->setSymfonyScheduledCommand($this);
-
-        return $this->parameters->add($argument);
-    }
-
-    /**
-     * Remove an argument to the scheduled command.
-     *
-     * @param ScheduledTaskParameter $argument
-     *
-     * @return bool
-     */
-    public function removeParameter(ScheduledTaskParameter $argument)
-    {
-        $argument->setSymfonyScheduledCommand(null);
-
-        return $this->parameters->removeElement($argument);
     }
 
     /**
@@ -94,7 +51,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      *
      * @return string
      */
-    public function getCommandName()
+    public function getCommandName(): string
     {
         return $this->commandName;
     }
@@ -109,6 +66,30 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     public function setCommandName(string $commandName)
     {
         $this->commandName = $commandName;
+
+        return $this;
+    }
+
+    /**
+     * Get the working directory of the command.
+     *
+     * @return string
+     */
+    public function getWorkingDirectory(): string
+    {
+        return $this->workingDirectory;
+    }
+
+    /**
+     * Set the working directory of the command.
+     *
+     * @param string $workingDirectory
+     *
+     * @return $this
+     */
+    public function setWorkingDirectory(string $workingDirectory)
+    {
+        $this->workingDirectory = $workingDirectory;
 
         return $this;
     }

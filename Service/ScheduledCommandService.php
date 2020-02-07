@@ -1,11 +1,19 @@
 <?php
-
+/**
+ * Service used to manage scheduled command entities.
+ *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ * @copyright 2020
+ */
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
 
+/**
+ * Class ScheduledCommandService.
+ */
 abstract class ScheduledCommandService extends ScheduledEntityService
 {
     /**
@@ -20,8 +28,9 @@ abstract class ScheduledCommandService extends ScheduledEntityService
     ) {
         parent::__construct($entityManager, $scheduledEntityClass);
     }
+
     /**
-     * Runs anything runnable like Symfony commands, Unix/Windows commands
+     * Runs anything runnable like Symfony commands, Unix/Windows commands.
      *
      * @param ScheduledCommandEntity $scheduledCommandEntity
      * @param OutputInterface        $output
@@ -29,7 +38,7 @@ abstract class ScheduledCommandService extends ScheduledEntityService
     abstract protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output);
 
     /**
-     * Run all scheduled command entities
+     * Run all scheduled command entities.
      *
      * @param OutputInterface $output
      */

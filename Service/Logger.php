@@ -1,43 +1,41 @@
 <?php
-
 /**
- * Log messages in var/logs/dades_scheduled_task_bundle.log
+ * Log messages in var/logs/dades_scheduled_task_bundle.log.
  *
  * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  */
-
 namespace Dades\ScheduledTaskBundle\Service;
 
 use InvalidArgumentException;
 
 /**
- * Logger class
+ * Logger class.
  */
 class Logger
 {
     /**
-     * The file in which the logs will be written
+     * The file in which the logs will be written.
      *
      * @var string
      */
     protected $fileLog;
 
     /**
-     * The path where the log file is
+     * The path where the log file is.
      *
      * @var string
      */
     protected $projectDirectory;
 
     /**
-     * The full path, the project dir plus the file name
+     * The full path, the project dir plus the file name.
      *
      * @var string
      */
     protected $path;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $projectDirectory
      * @param string $fileLog
@@ -55,7 +53,7 @@ class Logger
     }
 
     /**
-     * Write log with the status code and the message to write
+     * Write log with the status code and the message to write.
      *
      * @param  int          $status
      * @param  array|string $output
@@ -102,7 +100,7 @@ class Logger
      *
      * @return string
      */
-    protected function getDate()
+    protected function getDate(): string
     {
         return date('Y-m-d H:i:s');
     }
@@ -112,7 +110,7 @@ class Logger
      *
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->fileLog;
     }

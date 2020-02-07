@@ -6,25 +6,21 @@ use Symfony\Component\Process\Process;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
-use Dades\ScheduledTaskBundle\Entity\ScheduledConsoleCommand;
+use Dades\ScheduledTaskBundle\Entity\ScheduledConsoleCommandEntity;
 
 class ScheduledConsoleCommandService extends ScheduledCommandService
 {
     /**
-     * Undocumented function
+     * Constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param string $scheduledEntityClass
-     * @param string $projectDirectory
+     * @param string                 $scheduledEntityClass
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        string $scheduledEntityClass,
-        string $projectDirectory
+        string $scheduledEntityClass
     ) {
         parent::__construct($entityManager, $scheduledEntityClass);
-
-        $this->projectDirectory = $projectDirectory;
     }
 
     /**
@@ -32,7 +28,7 @@ class ScheduledConsoleCommandService extends ScheduledCommandService
      */
     public function create()
     {
-        return new ScheduledConsoleCommand();
+        return new ScheduledConsoleCommandEntity();
     }
 
     /**
@@ -41,7 +37,8 @@ class ScheduledConsoleCommandService extends ScheduledCommandService
     protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output)
     {
         $process = new Process($scheduledCommandEntity->getCommandName());
-        $code = $process->run();
+        $process->setWorkingDirectory($scheduledCommandEntity->getWorkingDirectory());
+        $process->run();
 
         if (!$process->isSuccessful()) {
             /** throw Exception */

@@ -1,13 +1,11 @@
 <?php
-
 /**
- * Service to use for manage the scheduled tasks.
+ * Service to use to manage the scheduled tasks.
  *
  * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  *
  * @copyright 2019
  */
-
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Cron\CronExpression;
@@ -17,26 +15,26 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * ScheduledEntityService class
+ * ScheduledEntityService class.
  */
 abstract class ScheduledEntityService
 {
     /**
-     * EntityManager
+     * EntityManager.
      *
      * @var EntityManagerInterface
      */
     protected $entityManager;
 
     /**
-     * ScheduledEntity repository
+     * ScheduledEntity repository.
      *
      * @var ObjectRepository
      */
     protected $repository;
 
     /**
-     * Entity Manager
+     * Constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param string                 $scheduledEntityClass
@@ -50,14 +48,14 @@ abstract class ScheduledEntityService
     }
 
     /**
-     * Create a new ScheduledEntity
+     * Create a new ScheduledEntity.
      *
      * @return mixed
      */
     abstract public function create();
 
     /**
-     * Return all the scheduled entities
+     * Return all the scheduled entities.
      *
      * @return object[]
      */
@@ -67,11 +65,11 @@ abstract class ScheduledEntityService
     }
 
     /**
-     * Return the specific scheduled entity
+     * Return the specific scheduled entity.
      *
      * @param  int $id
      *
-     * @return ScheduledEntity|object
+     * @return mixed
      *
      * @throws NoSuchEntityException
      */
@@ -87,7 +85,7 @@ abstract class ScheduledEntityService
     }
 
     /**
-     * Save a scheduled entity
+     * Save a scheduled entity.
      *
      * @param  ScheduledEntity $scheduledEntity
      */
@@ -98,9 +96,9 @@ abstract class ScheduledEntityService
     }
 
     /**
-     * Update a scheduled entity
+     * Update a scheduled entity.
      *
-     * @param  ScheduledEntity $scheduledEntity
+     * @param ScheduledEntity $scheduledEntity
      */
     public function update(ScheduledEntity $scheduledEntity)
     {
@@ -108,9 +106,9 @@ abstract class ScheduledEntityService
     }
 
     /**
-     * Delete a scheduled entity
+     * Delete a scheduled entity.
      *
-     * @param  ScheduledEntity $scheduledEntity
+     * @param ScheduledEntity $scheduledEntity
      */
     public function delete(ScheduledEntity $scheduledEntity)
     {
@@ -119,9 +117,9 @@ abstract class ScheduledEntityService
     }
 
     /**
-     * Test if a command should be run now
+     * Test if a command should be run now.
      *
-     * @param  ScheduledEntity $scheduledEntity
+     * @param ScheduledEntity $scheduledEntity
      *
      * @return bool
      */
@@ -131,40 +129,4 @@ abstract class ScheduledEntityService
 
         return $cron->isDue();
     }
-
-//    /**
-    //     * Run a scheduled task
-    //     *
-    //     * @param ScheduledEntity|object $scheduledEntity
-    //     * @param OutputInterface        $output
-    //     */
-    //    public function runOne(ScheduledEntity $scheduledEntity, $output)
-    //    {
-    //        try {
-    //            $process = new Process([$scheduledEntity->getCommand()]);
-    //            $exitCode = $process->run();
-    //            $outputMsg = $process->getOutput() . PHP_EOL;
-    //
-    //            if (!$process->isSuccessful()) {
-    //                $outputMsg .= $process->getErrorOutput();
-    //            }
-    //        } catch (\Exception $e) {
-    //            $outputMsg = $e->getTraceAsString();
-    //        }
-    //        $output->writeln('[' . date('Y-m-d H:i:s') . ']: ' . $outputMsg);
-    //    }
-    //
-    //    /**
-    //     * Run all scheduled tasks
-    //     *
-    //     * @param OutputInterface  $output
-    //     * @param Application|null $application
-    //     */
-    //    public function run($output, $application = null)
-    //    {
-    //        $tasks = $this->getScheduledEntities();
-    //        foreach ($tasks as $task) {
-    //            $this->runOne($task, $output);
-    //        }
-    //    }
 }

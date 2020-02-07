@@ -55,7 +55,7 @@ abstract class ScheduledEntity
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -65,7 +65,7 @@ abstract class ScheduledEntity
      *
      * @return string
      */
-    public function getCronExpression()
+    public function getCronExpression(): string
     {
         return $this->cronExpression;
     }

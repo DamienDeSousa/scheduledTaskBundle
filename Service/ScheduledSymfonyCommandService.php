@@ -1,36 +1,36 @@
 <?php
-
 /**
  * Service that manages the Symfony scheduled tasks.
  *
  * @author    Damien DE SOUSA
  * @copyright 2020
  */
-
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
-use Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommand;
+use Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommandEntity;
 use Symfony\Component\Process\Process;
 
 /**
- * Class SymfonyScheduledTaskService
+ * Class SymfonyScheduledTaskService.
  */
 class ScheduledSymfonyCommandService extends ScheduledCommandService
 {
     /**
-     * The project directory
+     * The working directory.
      *
      * @var string
      */
-    protected $projectDirectory;
+    protected $workingDirectory;
 
     /**
-     * Entity Manager
+     * Constructor.
      *
      * @param EntityManagerInterface $entityManager
+     * @param string                 $scheduledEntityClass
+     * @param string                 $projectDirectory
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -39,17 +39,15 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
     ) {
         parent::__construct($entityManager, $scheduledEntityClass);
 
-        $this->projectDirectory = $projectDirectory;
+        $this->workingDirectory = $projectDirectory;
     }
-
-    /** Implement abstract methods */
 
     /**
      * @inheritDoc
      */
     public function create()
     {
-        return new ScheduledSymfonyCommand();
+        return new ScheduledSymfonyCommandEntity();
     }
 
     /**
@@ -58,8 +56,8 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
     protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output)
     {
         $process = new Process($scheduledCommandEntity->getCommandName());
-        $process->setWorkingDirectory($this->projectDirectory);
-        $code = $process->run();
+        $process->setWorkingDirectory($this->workingDirectory);
+        $process->run();
 
         if (!$process->isSuccessful()) {
             /** throw Exception */
