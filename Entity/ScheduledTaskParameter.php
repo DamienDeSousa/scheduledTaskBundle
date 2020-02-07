@@ -102,10 +102,14 @@ class ScheduledTaskParameter
      * Set the value of the Symfony scheduled task argument.
      *
      * @param string $value
+     *
+     * @return $this
      */
     public function setValue(string $value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**
@@ -122,9 +126,13 @@ class ScheduledTaskParameter
      * Set the Symfony scheduled task linked to this argument.
      *
      * @param ScheduledCommandEntity|null $symfonyScheduledCommand
+     *
+     * @return $this
      */
     public function setSymfonyScheduledCommand($symfonyScheduledCommand)
     {
         $this->symfonyScheduledCommand = $symfonyScheduledCommand;
+
+        return $this;
     }
 }

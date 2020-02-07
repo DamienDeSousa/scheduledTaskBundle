@@ -17,7 +17,7 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
  * @ORM\Table(name="scheduled_console_command_entity")
  * @DiscriminatorEntry("scheduled_console_command_entity")
  */
-class ScheduledConsoleCommand extends ScheduledCommandEntity
+class ScheduledConsoleCommandEntity extends ScheduledCommandEntity
 {
 
 }

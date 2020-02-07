@@ -65,28 +65,34 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      * Add an argument to the scheduled command.
      *
      * @param ScheduledTaskParameter $argument
+     *
+     * @return bool|true
      */
     public function addParameter(ScheduledTaskParameter $argument)
     {
         $argument->setSymfonyScheduledCommand($this);
-        $this->parameters[] = $argument;
+
+        return $this->parameters->add($argument);
     }
 
     /**
      * Remove an argument to the scheduled command.
      *
      * @param ScheduledTaskParameter $argument
+     *
+     * @return bool
      */
     public function removeParameter(ScheduledTaskParameter $argument)
     {
         $argument->setSymfonyScheduledCommand(null);
-        $this->parameters->removeElement($argument);
+
+        return $this->parameters->removeElement($argument);
     }
 
     /**
      * Get the command name.
      *
-     * @return  string
+     * @return string
      */
     public function getCommandName()
     {
@@ -96,9 +102,9 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     /**
      * Set the command name.
      *
-     * @param  string  $commandName  The command name
+     * @param string $commandName
      *
-     * @return  $this
+     * @return $this
      */
     public function setCommandName(string $commandName)
     {
