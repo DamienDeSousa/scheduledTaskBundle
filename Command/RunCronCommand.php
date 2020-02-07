@@ -43,29 +43,19 @@ class RunCronCommand extends Command
     protected $fileLog;
 
     /**
-     * SymfonyScheduledTaskService that manage ScheduledTask
-     *
-     * @var SymfonyScheduledTaskService
-     */
-    protected $symfonyScheduledTaskService;
-
-    /**
      * Constructor
      *
      * @param string                      $projectDirectory
      * @param string                      $fileLog
-     * @param SymfonyScheduledTaskService $symfonyScheduledTaskService
      */
     public function __construct(
         string $projectDirectory,
-        string $fileLog,
-        SymfonyScheduledTaskService $symfonyScheduledTaskService
+        string $fileLog
     ) {
         parent::__construct();
 
         $this->projectDirectory = $projectDirectory;
         $this->fileLog = $fileLog;
-        $this->symfonyScheduledTaskService = $symfonyScheduledTaskService;
     }
 
     /**
@@ -85,12 +75,6 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ScheduledCommandService[] $taskServices */
-        $taskServices = [
-            $this->symfonyScheduledTaskService,
-        ];
-        foreach ($taskServices as $taskService) {
-            $taskService->runAllScheduledCommand($output);
-        }
+
     }
 }
