@@ -19,6 +19,9 @@ services:
     Dades\ScheduledTaskBundle\Command\RunCronCommand:
         $projectDirectory: '%kernel.project_dir%'
         $fileLog: '%fileLog%'
+        $scheduledCommandServices:
+            - Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService
+            - Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService
 
     Dades\ScheduledTaskBundle\Service\Logger:
         $projectDirectory: '%kernel.project_dir%'
