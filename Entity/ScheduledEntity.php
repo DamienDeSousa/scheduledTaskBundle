@@ -12,7 +12,7 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorParent;
 
 /**
- * ScheduledEntity class
+ * ScheduledEntity class.
  *
  * @ORM\Entity
  * @ORM\Table(name="scheduled_entity")
@@ -24,7 +24,7 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorParent;
 abstract class ScheduledEntity
 {
     /**
-     * Unique ID
+     * Unique ID.
      *
      * @var int
      *
@@ -35,7 +35,7 @@ abstract class ScheduledEntity
     protected $id;
 
     /**
-     * Unix cron expression
+     * Unix cron expression.
      *
      * @var string
      *
@@ -44,7 +44,14 @@ abstract class ScheduledEntity
     protected $cronExpression;
 
     /**
-     * Get id
+     * ScheduledEntity constructor.
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * Get id.
      *
      * @return int
      */
@@ -54,7 +61,7 @@ abstract class ScheduledEntity
     }
 
     /**
-     * Get the value of Cron Expresion
+     * Get the value of Cron Expresion.
      *
      * @return string
      */
@@ -64,11 +71,11 @@ abstract class ScheduledEntity
     }
 
     /**
-     * Set the value of Cron Expresion
+     * Set the value of Cron Expresion.
      *
      * @param string cronExpression
      *
-     * @return ScheduledEntity
+     * @return $this
      */
     public function setCronExpression($cronExpression)
     {

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Defines the required attributes for a scheduled command entity.
+ *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ * @copyright 2020
+ */
 namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -7,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 
 /**
- * ScheduledCommandEntity class
+ * ScheduledCommandEntity class.
  *
  * @ORM\Table(name="scheduled_command_entity")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository")
@@ -16,7 +21,7 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 abstract class ScheduledCommandEntity extends ScheduledEntity
 {
     /**
-     * The arguments used for this task
+     * The parameters used for this task.
      *
      * @var ArrayCollection
      *
@@ -28,7 +33,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     protected $parameters;
 
     /**
-     * The command name
+     * The command name.
      *
      * @var string
      *
@@ -41,11 +46,13 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->parameters = new ArrayCollection();
     }
 
     /**
-     * Get the arguments of the Symfony scheduled task
+     * Get the arguments of the scheduled command.
      *
      * @return ArrayCollection
      */
@@ -55,7 +62,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     }
 
     /**
-     * Add an argument to the Symfony scheduled task
+     * Add an argument to the scheduled command.
      *
      * @param ScheduledTaskParameter $argument
      */
@@ -66,7 +73,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     }
 
     /**
-     * Remove an argument to the Symfony scheduled task
+     * Remove an argument to the scheduled command.
      *
      * @param ScheduledTaskParameter $argument
      */
@@ -77,7 +84,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     }
 
     /**
-     * Get the command name
+     * Get the command name.
      *
      * @return  string
      */
@@ -87,11 +94,11 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     }
 
     /**
-     * Set the command name
+     * Set the command name.
      *
      * @param  string  $commandName  The command name
      *
-     * @return  self
+     * @return  $this
      */
     public function setCommandName(string $commandName)
     {

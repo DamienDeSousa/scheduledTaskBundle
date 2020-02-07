@@ -1,18 +1,16 @@
 <?php
-
 /**
  * Arguments used for scheduled tasks.
  *
  * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2020
  */
-
 namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ScheduledTaskParameter class
+ * ScheduledTaskParameter class.
  *
  * @ORM\Table(name="symfony_scheduled_task_argument")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledTaskParameterRepository")
@@ -20,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ScheduledTaskParameter
 {
     /**
-     * id of the ScheduledTaskParameter entity
+     * id of the ScheduledTaskParameter entity.
      *
      * @var int
      *
@@ -31,7 +29,7 @@ class ScheduledTaskParameter
     protected $id;
 
     /**
-     * Name of the argument
+     * Name of the argument.
      *
      * @var string
      *
@@ -40,7 +38,7 @@ class ScheduledTaskParameter
     protected $name;
 
     /**
-     * Value of the argument
+     * Value of the argument.
      *
      * @var string
      *
@@ -49,7 +47,7 @@ class ScheduledTaskParameter
     protected $value;
 
     /**
-     * The Symfony scheduled task of which the argument is applied for
+     * The Symfony scheduled task of which the argument is applied for.
      *
      * @var ScheduledCommandEntity
      *
@@ -61,7 +59,7 @@ class ScheduledTaskParameter
     protected $symfonyScheduledCommand;
 
     /**
-     * Get the ID of the Symfony scheduled task argument
+     * Get the ID of the Symfony scheduled task argument.
      *
      * @return int
      */
@@ -71,7 +69,7 @@ class ScheduledTaskParameter
     }
 
     /**
-     * Get the name of the Symfony scheduled task argument
+     * Get the name of the Symfony scheduled task argument.
      *
      * @return string
      */
@@ -81,7 +79,7 @@ class ScheduledTaskParameter
     }
 
     /**
-     * Set the name of the Symfony scheduled task argument
+     * Set the name of the Symfony scheduled task argument.
      *
      * @param string $name
      */
@@ -91,7 +89,7 @@ class ScheduledTaskParameter
     }
 
     /**
-     * Get the value of the Symfony scheduled task argument
+     * Get the value of the Symfony scheduled task argument.
      *
      * @return string
      */
@@ -101,7 +99,7 @@ class ScheduledTaskParameter
     }
 
     /**
-     * Set the value of the Symfony scheduled task argument
+     * Set the value of the Symfony scheduled task argument.
      *
      * @param string $value
      */
@@ -111,7 +109,7 @@ class ScheduledTaskParameter
     }
 
     /**
-     * Get the Symfony scheduled task linked to this argument
+     * Get the Symfony scheduled task linked to this argument.
      *
      * @return ScheduledCommandEntity
      */
@@ -121,7 +119,7 @@ class ScheduledTaskParameter
     }
 
     /**
-     * Set the Symfony scheduled task linked to this argument
+     * Set the Symfony scheduled task linked to this argument.
      *
      * @param ScheduledCommandEntity|null $symfonyScheduledCommand
      */
