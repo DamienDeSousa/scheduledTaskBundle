@@ -25,6 +25,7 @@ services:
     arguments:
       - "@doctrine.orm.entity_manager"
       - '%dades_scheduled_task_bundle.symfony_command_entity.class%'
+      - '%kernel.project_dir%'
 
   dades_scheduled_task_bundle.run_command:
     class: '%dades_scheduled_task_bundle.run_command.class%'
