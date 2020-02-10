@@ -1,16 +1,19 @@
 <?php
+
 /**
  * Service that manages the Symfony scheduled tasks.
  *
  * @author    Damien DE SOUSA
  * @copyright 2020
  */
+
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
 use Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommandEntity;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -55,12 +58,19 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
      */
     protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output)
     {
-        $process = new Process($scheduledCommandEntity->getCommandName());
+        $fullCommand = $scheduledCommandEntity->getCommandName();
+        if ($scheduledCommandEntity->getParameters() !== null) {
+            $fullCommand .= ' ' . $scheduledCommandEntity->getParameters();
+        }
+        $process = new Process($fullCommand);
         $process->setWorkingDirectory($this->workingDirectory);
         $process->run();
 
         if (!$process->isSuccessful()) {
-            /** throw Exception */
+            throw new RuntimeException($process->getErrorOutput(), 1);
         }
+
+        $executionMessage = $process->getOutput();
+        $this->logger->writeLog(1, $executionMessage);
     }
 }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Defines the required attributes for a scheduled command entity.
  *
  * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2020
  */
+
 namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,6 +39,15 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
      * @ORM\Column(type="string", name="working_directory", nullable=true)
      */
     protected $workingDirectory;
+
+    /**
+     * The parameters of the command. Can be empty.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", name="parameters", nullable=true)
+     */
+    protected $parameters;
 
     /**
      * ScheduledCommandEntity constructor.
@@ -90,6 +101,30 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     public function setWorkingDirectory(string $workingDirectory)
     {
         $this->workingDirectory = $workingDirectory;
+
+        return $this;
+    }
+
+    /**
+     * Get the parameters of the command. Can be empty.
+     *
+     * @return  string
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * Set the parameters of the command. Can be empty.
+     *
+     * @param  string  $parameters  The parameters of the command. Can be empty.
+     *
+     * @return  self
+     */
+    public function setParameters(string $parameters)
+    {
+        $this->parameters = $parameters;
 
         return $this;
     }
