@@ -10,6 +10,7 @@ namespace Dades\ScheduledTaskBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
+use RuntimeException;
 
 /**
  * Class ScheduledCommandService.
@@ -47,7 +48,11 @@ abstract class ScheduledCommandService extends ScheduledEntityService
         /** @var ScheduledCommandEntity[] $scheduledCommandEntities */
         $scheduledCommandEntities = $this->getScheduledEntities();
         foreach ($scheduledCommandEntities as $scheduledCommandEntity) {
-            $this->run($scheduledCommandEntity, $output);
+            try {
+                $this->run($scheduledCommandEntity, $output);
+            } catch (RuntimeException $e) {
+                $output->writeln($e->getMessage() . PHP_EOL . $e->getTraceAsString());
+            }
         }
     }
 }

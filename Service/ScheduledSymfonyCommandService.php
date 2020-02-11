@@ -48,6 +48,8 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
      * @param EntityManagerInterface $entityManager
      * @param string                 $scheduledEntityClass
      * @param string                 $projectDirectory
+     *
+     * @throws Exception
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -75,22 +77,26 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
 
     /**
      * @inheritDoc
+     *
+     * @throws RuntimeException
      */
     protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output)
     {
-        $fullCommand = $this->phpBin . ' ' . $this->consoleBin . ' ' . $scheduledCommandEntity->getCommandName();
-        if ($scheduledCommandEntity->getParameters() !== null) {
-            $fullCommand .= ' ' . $scheduledCommandEntity->getParameters();
+        if ($this->isDue($scheduledCommandEntity)) {
+            $fullCommand = $this->phpBin . ' ' . $this->consoleBin . ' ' . $scheduledCommandEntity->getCommandName();
+            if ($scheduledCommandEntity->getParameters() !== null) {
+                $fullCommand .= ' ' . $scheduledCommandEntity->getParameters();
+            }
+            $process = new Process($fullCommand);
+            $process->setWorkingDirectory($this->workingDirectory);
+            $process->run();
+    
+            if (!$process->isSuccessful()) {
+                throw new RuntimeException($process->getErrorOutput(), 1);
+            }
+    
+            $executionMessage = $process->getOutput();
+            $output->writeln($executionMessage);
         }
-        $process = new Process($fullCommand);
-        $process->setWorkingDirectory($this->workingDirectory);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput(), 1);
-        }
-
-        $executionMessage = $process->getOutput();
-        $output->writeln($executionMessage);
     }
 }
