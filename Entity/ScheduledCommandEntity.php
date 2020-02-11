@@ -84,9 +84,9 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     /**
      * Get the working directory of the command.
      *
-     * @return string
+     * @return string|null
      */
-    public function getWorkingDirectory(): string
+    public function getWorkingDirectory()
     {
         return $this->workingDirectory;
     }
@@ -108,7 +108,7 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     /**
      * Get the parameters of the command. Can be empty.
      *
-     * @return  string
+     * @return string|null
      */
     public function getParameters()
     {
