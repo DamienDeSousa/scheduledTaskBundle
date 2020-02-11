@@ -12,13 +12,6 @@ use Dades\ScheduledTaskBundle\Entity\ScheduledConsoleCommandEntity;
 class ScheduledConsoleCommandService extends ScheduledCommandService
 {
     /**
-     * Custom Dades logger.
-     *
-     * @var Logger
-     */
-    protected $logger;
-
-    /**
      * Constructor.
      *
      * @param EntityManagerInterface $entityManager
@@ -26,12 +19,9 @@ class ScheduledConsoleCommandService extends ScheduledCommandService
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        string $scheduledEntityClass,
-        Logger $logger
+        string $scheduledEntityClass
     ) {
         parent::__construct($entityManager, $scheduledEntityClass);
-
-        $this->logger = $logger;
     }
 
     /**

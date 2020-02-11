@@ -17,13 +17,13 @@ services:
   dades_scheduled_task_bundle.console_command_service:
     class: '%dades_scheduled_task_bundle.console_command_service.class%'
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - '@doctrine.orm.entity_manager'
       - '%dades_scheduled_task_bundle.console_command_entity.class%'
 
   dades_scheduled_task_bundle.symfony_command_service:
     class: '%dades_scheduled_task_bundle.symfony_command_service.class%'
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - '@doctrine.orm.entity_manager'
       - '%dades_scheduled_task_bundle.symfony_command_entity.class%'
       - '%kernel.project_dir%'
 

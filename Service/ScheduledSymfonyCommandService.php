@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Service that manages the Symfony scheduled tasks.
  *
  * @author    Damien DE SOUSA
  * @copyright 2020
  */
-
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +22,7 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
     /**
      * The working directory.
      *
-     * @var string
+     * @var stringext install Yish.php-snippets-for-vscode
      */
     protected $workingDirectory;
 
@@ -71,6 +69,6 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
         }
 
         $executionMessage = $process->getOutput();
-        $this->logger->writeLog(1, $executionMessage);
+        $output->writeln($executionMessage);
     }
 }
