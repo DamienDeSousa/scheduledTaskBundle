@@ -11,7 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
 use Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommandEntity;
+use Exception;
 use RuntimeException;
+use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -25,6 +27,20 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
      * @var stringext install Yish.php-snippets-for-vscode
      */
     protected $workingDirectory;
+
+    /**
+     * The php executable path.
+     *
+     * @var string
+     */
+    protected $phpBin;
+
+    /**
+     * Symfony console executable path.
+     *
+     * @var string
+     */
+    protected $consoleBin;
 
     /**
      * Constructor.
@@ -41,6 +57,12 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
         parent::__construct($entityManager, $scheduledEntityClass);
 
         $this->workingDirectory = $projectDirectory;
+        $phpFinder = new PhpExecutableFinder();
+        $this->phpBin = $phpFinder->find();
+        if (!$this->phpBin) {
+            throw new Exception('The php executable could not be found, add it to your PATH');
+        }
+        $this->consoleBin = 'bin' . DIRECTORY_SEPARATOR . 'console';
     }
 
     /**
@@ -56,7 +78,7 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
      */
     protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output)
     {
-        $fullCommand = $scheduledCommandEntity->getCommandName();
+        $fullCommand = $this->phpBin . ' ' . $this->consoleBin . ' ' . $scheduledCommandEntity->getCommandName();
         if ($scheduledCommandEntity->getParameters() !== null) {
             $fullCommand .= ' ' . $scheduledCommandEntity->getParameters();
         }

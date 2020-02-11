@@ -9,7 +9,6 @@
 
 namespace Dades\ScheduledTaskBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 
