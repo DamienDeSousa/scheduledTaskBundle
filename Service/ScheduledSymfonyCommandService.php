@@ -87,6 +87,7 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
             if ($scheduledCommandEntity->getParameters() !== null) {
                 $fullCommand .= ' ' . $scheduledCommandEntity->getParameters();
             }
+            $output->writeln($this->getOutputHeader($fullCommand));
             $process = new Process($fullCommand);
             $process->setWorkingDirectory($this->workingDirectory);
             $process->run();
