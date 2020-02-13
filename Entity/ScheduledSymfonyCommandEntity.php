@@ -12,10 +12,10 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
 
 /**
  * ScheduledSymfonyCommand class.
- *
- * @ORM\Entity
- * @ORM\Table(name="scheduled_symfony_command_entity")
- * @DiscriminatorEntry(value="scheduled_symfony_command_entity")
+// *
+// * @ORM\Entity
+// * @ORM\Table(name="scheduled_symfony_command_entity")
+// * @DiscriminatorEntry(value="scheduled_symfony_command_entity")
  */
 class ScheduledSymfonyCommandEntity extends ScheduledCommandEntity
 {
