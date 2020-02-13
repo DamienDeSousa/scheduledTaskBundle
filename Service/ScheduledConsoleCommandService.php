@@ -34,23 +34,28 @@ class ScheduledConsoleCommandService extends ScheduledCommandService
 
     /**
      * @inheritDoc
+     *
+     * @throws RuntimeException
      */
     protected function run(ScheduledCommandEntity $scheduledCommandEntity, OutputInterface $output)
     {
         if ($this->isDue($scheduledCommandEntity)) {
             $fullCommand = $scheduledCommandEntity->getCommandName();
+
             if ($scheduledCommandEntity->getParameters() !== null) {
                 $fullCommand .= ' ' . $scheduledCommandEntity->getParameters();
             }
             $output->writeln($this->getOutputHeader($fullCommand));
             $process = new Process($fullCommand);
-            $process->setWorkingDirectory($scheduledCommandEntity->getWorkingDirectory());
+
+            if ($scheduledCommandEntity->getWorkingDirectory() !== null) {
+                $process->setWorkingDirectory($scheduledCommandEntity->getWorkingDirectory());
+            }
             $process->run();
     
             if (!$process->isSuccessful()) {
                 throw new RuntimeException($process->getErrorOutput(), 1);
             }
-    
             $executionMessage = $process->getOutput();
             $output->writeln($executionMessage);
         }
