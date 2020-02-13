@@ -55,4 +55,11 @@ abstract class ScheduledCommandService extends ScheduledEntityService
             }
         }
     }
+
+    protected function getOutputHeader(string $command)
+    {
+        $currentDate = date('y-m-d H:i:s');
+
+        return '[' . $currentDate . '] ' . $command . ' : ' . PHP_EOL;
+    }
 }

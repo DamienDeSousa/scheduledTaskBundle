@@ -24,7 +24,7 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
     /**
      * The working directory.
      *
-     * @var stringext install Yish.php-snippets-for-vscode
+     * @var string
      */
     protected $workingDirectory;
 

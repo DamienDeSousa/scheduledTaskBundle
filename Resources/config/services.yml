@@ -34,4 +34,3 @@ services:
       - '%fileLog%'
       - ['@dades_scheduled_task_bundle.console_command_service', '@dades_scheduled_task_bundle.symfony_command_service']
     tags: ['console.command']
-
