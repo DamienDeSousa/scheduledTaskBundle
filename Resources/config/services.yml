@@ -11,6 +11,7 @@ parameters:
   dades_scheduled_task_bundle.symfony_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService
 
 services:
+  # Services
   dades_scheduled_task_bundle.logger:
     class: '%dades_scheduled_task_bundle.logger.class%'
     arguments:
@@ -21,17 +22,18 @@ services:
     class: '%dades_scheduled_task_bundle.console_command_service.class%'
     arguments:
       - '@doctrine.orm.entity_manager'
-      - '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
+      - '@dades_scheduled_task_bundle.scheduled_command_repository.class'
       - '%dades_scheduled_task_bundle.scheduled_command_type.console%'
 
   dades_scheduled_task_bundle.symfony_command_service:
     class: '%dades_scheduled_task_bundle.symfony_command_service.class%'
     arguments:
       - '@doctrine.orm.entity_manager'
-      - '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
+      - '@dades_scheduled_task_bundle.scheduled_command_repository'
       - '%kernel.project_dir%'
       - '%dades_scheduled_task_bundle.scheduled_command_type.symfony%'
 
+  # Command
   dades_scheduled_task_bundle.run_command:
     class: '%dades_scheduled_task_bundle.run_command.class%'
     arguments:
@@ -39,3 +41,7 @@ services:
       - '%dades_scheduled_task_bundle.fileLog%'
       - ['@dades_scheduled_task_bundle.console_command_service', '@dades_scheduled_task_bundle.symfony_command_service']
     tags: ['console.command']
+
+  # Repository
+  dades_scheduled_task_bundle.scheduled_command_repository:
+    class: '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
