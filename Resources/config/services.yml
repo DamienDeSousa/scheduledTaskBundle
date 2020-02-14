@@ -7,8 +7,8 @@ parameters:
   dades_scheduled_task_bundle.logger.class: Dades\ScheduledTaskBundle\Service\Logger
   dades_scheduled_task_bundle.console_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService
   dades_scheduled_task_bundle.run_command.class: Dades\ScheduledTaskBundle\Command\RunCronCommand
-  dades_scheduled_task_bundle.scheduled_command_entity.class: Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity
   dades_scheduled_task_bundle.scheduled_command_repository.class: Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository
+  dades_scheduled_task_bundle.symfony_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService
 
 services:
   dades_scheduled_task_bundle.logger:
