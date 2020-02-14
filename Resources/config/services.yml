@@ -45,3 +45,5 @@ services:
   # Repository
   dades_scheduled_task_bundle.scheduled_command_repository:
     class: '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
+    arguments:
+      - '@doctrine'
