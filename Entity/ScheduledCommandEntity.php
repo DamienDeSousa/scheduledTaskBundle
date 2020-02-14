@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Defines the required attributes for a scheduled command entity.
  *
  * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2020
  */
-
 namespace Dades\ScheduledTaskBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -19,7 +17,7 @@ use Levelab\Doctrine\DiscriminatorBundle\Annotation\DiscriminatorEntry;
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository")
  * @DiscriminatorEntry("scheduled_command_entity")
  */
-abstract class ScheduledCommandEntity extends ScheduledEntity
+class ScheduledCommandEntity extends ScheduledEntity
 {
     /**
      * The command name.
@@ -49,11 +47,32 @@ abstract class ScheduledCommandEntity extends ScheduledEntity
     protected $parameters;
 
     /**
-     * ScheduledCommandEntity constructor.
+     * The type of the scheduled command entity.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", name="scheduled_command_entity_type")
      */
-    public function __construct()
+    protected $scheduledCommandEntityType;
+
+    /**
+     * ScheduledCommandEntity constructor.
+     *
+     * @param string $scheduledCommandEntityType
+     */
+    public function __construct(string $scheduledCommandEntityType)
     {
         parent::__construct();
+
+        $this->scheduledCommandEntityType = $scheduledCommandEntityType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScheduledCommandEntityType(): string
+    {
+        return $this->scheduledCommandEntityType;
     }
 
     /**

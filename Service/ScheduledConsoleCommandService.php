@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Service used to manage and execute scheduled command entities.
+ *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ * @copyright 2020
+ */
 namespace Dades\ScheduledTaskBundle\Service;
 
 use RuntimeException;
@@ -7,21 +12,26 @@ use Symfony\Component\Process\Process;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
-use Dades\ScheduledTaskBundle\Entity\ScheduledConsoleCommandEntity;
+use Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository;
 
+/**
+ * Class ScheduledConsoleCommandService.
+ */
 class ScheduledConsoleCommandService extends ScheduledCommandService
 {
     /**
      * Constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param string                 $scheduledEntityClass
+     * @param EntityManagerInterface     $entityManager
+     * @param ScheduledCommandRepository $scheduledCommandRepository
+     * @param string                     $scheduledCommandType
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        string $scheduledEntityClass
+        ScheduledCommandRepository $scheduledCommandRepository,
+        string $scheduledCommandType
     ) {
-        parent::__construct($entityManager, $scheduledEntityClass);
+        parent::__construct($entityManager, $scheduledCommandType, $scheduledCommandRepository);
     }
 
     /**
@@ -29,7 +39,7 @@ class ScheduledConsoleCommandService extends ScheduledCommandService
      */
     public function create()
     {
-        return new ScheduledConsoleCommandEntity();
+        return new ScheduledCommandEntity($this->scheduledCommandType);
     }
 
     /**

@@ -7,10 +7,10 @@
  */
 namespace Dades\ScheduledTaskBundle\Service;
 
+use Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
-use Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommandEntity;
 use Exception;
 use RuntimeException;
 use Symfony\Component\Process\PhpExecutableFinder;
@@ -45,18 +45,20 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
     /**
      * Constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param string                 $scheduledEntityClass
-     * @param string                 $projectDirectory
+     * @param EntityManagerInterface     $entityManager
+     * @param ScheduledCommandRepository $scheduledCommandRepository
+     * @param string                     $projectDirectory
+     * @param string                     $scheduledCommandType
      *
      * @throws Exception
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        string $scheduledEntityClass,
-        string $projectDirectory
+        ScheduledCommandRepository $scheduledCommandRepository,
+        string $projectDirectory,
+        string $scheduledCommandType
     ) {
-        parent::__construct($entityManager, $scheduledEntityClass);
+        parent::__construct($entityManager, $scheduledCommandType, $scheduledCommandRepository);
 
         $this->workingDirectory = $projectDirectory;
         $phpFinder = new PhpExecutableFinder();
@@ -72,7 +74,7 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
      */
     public function create()
     {
-        return new ScheduledSymfonyCommandEntity();
+        return new ScheduledCommandEntity($this->scheduledCommandType);
     }
 
     /**
@@ -95,7 +97,6 @@ class ScheduledSymfonyCommandService extends ScheduledCommandService
             if (!$process->isSuccessful()) {
                 throw new RuntimeException($process->getErrorOutput(), 1);
             }
-    
             $executionMessage = $process->getOutput();
             $output->writeln($executionMessage);
         }

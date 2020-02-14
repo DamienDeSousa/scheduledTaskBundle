@@ -1,36 +1,41 @@
 parameters:
-  fileLog: dades_scheduled_task_bundle.log
+  dades_scheduled_task_bundle.fileLog: dades_scheduled_task_bundle.log
+  dades_scheduled_task_bundle.scheduled_command_type.symfony: scheduled_symfony_command
+  dades_scheduled_task_bundle.scheduled_command_type.console: scheduled_console_command
+
+#  Class identifiers
   dades_scheduled_task_bundle.logger.class: Dades\ScheduledTaskBundle\Service\Logger
   dades_scheduled_task_bundle.console_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService
-  dades_scheduled_task_bundle.console_command_entity.class: Dades\ScheduledTaskBundle\Entity\ScheduledConsoleCommandEntity
-  dades_scheduled_task_bundle.symfony_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService
-  dades_scheduled_task_bundle.symfony_command_entity.class: Dades\ScheduledTaskBundle\Entity\ScheduledSymfonyCommandEntity
   dades_scheduled_task_bundle.run_command.class: Dades\ScheduledTaskBundle\Command\RunCronCommand
+  dades_scheduled_task_bundle.scheduled_command_entity.class: Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity
+  dades_scheduled_task_bundle.scheduled_command_repository.class: Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository
 
 services:
   dades_scheduled_task_bundle.logger:
     class: '%dades_scheduled_task_bundle.logger.class%'
     arguments:
       - '%kernel.project_dir%'
-      - '%fileLog%'
+      - '%dades_scheduled_task_bundle.fileLog%'
 
   dades_scheduled_task_bundle.console_command_service:
     class: '%dades_scheduled_task_bundle.console_command_service.class%'
     arguments:
       - '@doctrine.orm.entity_manager'
-      - '%dades_scheduled_task_bundle.console_command_entity.class%'
+      - '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
+      - '%dades_scheduled_task_bundle.scheduled_command_type.console%'
 
   dades_scheduled_task_bundle.symfony_command_service:
     class: '%dades_scheduled_task_bundle.symfony_command_service.class%'
     arguments:
       - '@doctrine.orm.entity_manager'
-      - '%dades_scheduled_task_bundle.symfony_command_entity.class%'
+      - '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
       - '%kernel.project_dir%'
+      - '%dades_scheduled_task_bundle.scheduled_command_type.symfony%'
 
   dades_scheduled_task_bundle.run_command:
     class: '%dades_scheduled_task_bundle.run_command.class%'
     arguments:
       - '%kernel.project_dir%'
-      - '%fileLog%'
+      - '%dades_scheduled_task_bundle.fileLog%'
       - ['@dades_scheduled_task_bundle.console_command_service', '@dades_scheduled_task_bundle.symfony_command_service']
     tags: ['console.command']

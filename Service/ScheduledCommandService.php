@@ -7,6 +7,7 @@
  */
 namespace Dades\ScheduledTaskBundle\Service;
 
+use Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
@@ -18,16 +19,35 @@ use RuntimeException;
 abstract class ScheduledCommandService extends ScheduledEntityService
 {
     /**
+     * The scheduled command type.
+     *
+     * @var string
+     */
+    protected $scheduledCommandType;
+
+    /**
+     * The scheduled command repository.
+     *
+     * @var ScheduledCommandRepository
+     */
+    protected $scheduledCommandRepository;
+
+    /**
      * Constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param string                 $scheduledEntityClass
+     * @param EntityManagerInterface     $entityManager
+     * @param string                     $scheduledCommandType
+     * @param ScheduledCommandRepository $scheduledCommandRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        string $scheduledEntityClass
+        string $scheduledCommandType,
+        ScheduledCommandRepository $scheduledCommandRepository
     ) {
-        parent::__construct($entityManager, $scheduledEntityClass);
+        parent::__construct($entityManager);
+
+        $this->scheduledCommandType = $scheduledCommandType;
+        $this->scheduledCommandRepository = $scheduledCommandRepository;
     }
 
     /**
@@ -45,8 +65,11 @@ abstract class ScheduledCommandService extends ScheduledEntityService
      */
     public function runAllScheduledCommand(OutputInterface $output)
     {
+        $criteria = [
+            'scheduledCommandEntityType' => $this->scheduledCommandType
+        ];
         /** @var ScheduledCommandEntity[] $scheduledCommandEntities */
-        $scheduledCommandEntities = $this->getScheduledEntities();
+        $scheduledCommandEntities = $this->scheduledCommandRepository->findBy($criteria);
         foreach ($scheduledCommandEntities as $scheduledCommandEntity) {
             try {
                 $this->run($scheduledCommandEntity, $output);
@@ -56,6 +79,13 @@ abstract class ScheduledCommandService extends ScheduledEntityService
         }
     }
 
+    /**
+     * Format the header message for log.
+     *
+     * @param string $command
+     *
+     * @return string
+     */
     protected function getOutputHeader(string $command)
     {
         $currentDate = date('y-m-d H:i:s');

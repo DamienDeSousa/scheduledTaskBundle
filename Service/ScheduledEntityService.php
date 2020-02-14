@@ -27,24 +27,14 @@ abstract class ScheduledEntityService
     protected $entityManager;
 
     /**
-     * ScheduledEntity repository.
-     *
-     * @var ObjectRepository
-     */
-    protected $repository;
-
-    /**
      * Constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param string                 $scheduledEntityClass
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        string $scheduledEntityClass
+        EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository($scheduledEntityClass);
     }
 
     /**
@@ -53,36 +43,6 @@ abstract class ScheduledEntityService
      * @return mixed
      */
     abstract public function create();
-
-    /**
-     * Return all the scheduled entities.
-     *
-     * @return object[]
-     */
-    public function getScheduledEntities()
-    {
-        return $this->repository->findAll();
-    }
-
-    /**
-     * Return the specific scheduled entity.
-     *
-     * @param  int $id
-     *
-     * @return mixed
-     *
-     * @throws NoSuchEntityException
-     */
-    public function getScheduledEntity(int $id)
-    {
-        $scheduledTask = $this->repository->find($id);
-
-        if (!$scheduledTask) {
-            throw new NoSuchEntityException("No scheduled task found for id [$id]", 1);
-        }
-
-        return $scheduledTask;
-    }
 
     /**
      * Save a scheduled entity.
