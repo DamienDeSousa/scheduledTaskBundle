@@ -22,7 +22,7 @@ services:
     class: '%dades_scheduled_task_bundle.console_command_service.class%'
     arguments:
       - '@doctrine.orm.entity_manager'
-      - '@dades_scheduled_task_bundle.scheduled_command_repository.class'
+      - '@dades_scheduled_task_bundle.scheduled_command_repository'
       - '%dades_scheduled_task_bundle.scheduled_command_type.console%'
 
   dades_scheduled_task_bundle.symfony_command_service:
