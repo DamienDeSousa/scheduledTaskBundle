@@ -1,13 +1,16 @@
 <?php
-
+/**
+ * Class used to unit tests the ScheduledSymfonyCommandService.
+ *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
+ * @copyright 2020
+ */
 namespace Dades\ScheduledTaskBundle\Tests\Service;
 
-use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
 use Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository;
 use Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -15,11 +18,37 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class ScheduledSymfonyCommandServiceTest extends KernelTestCase
 {
+    /**
+     * The project root directory.
+     *
+     * @var string
+     */
     protected $projectDir;
+
+    /**
+     * The scheduled command type.
+     *
+     * @var string
+     */
     protected $scheduledCommandType;
+
+    /**
+     * The mock of the ScheduledCommandRepository.
+     *
+     * @var ScheduledCommandRepository|MockObject
+     */
     protected $scheduledCommandRepository;
+
+    /**
+     * The mock of the entity manager.
+     *
+     * @var EntityManager|MockObject
+     */
     protected $entityManager;
 
+    /**
+     * Set attributes before launching tests.
+     */
     public function setUp()
     {
         $kernel = self::bootKernel();
@@ -33,6 +62,9 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
             ->willReturn($this->scheduledCommandRepository);
     }
 
+    /**
+     * Test the constructor.
+     */
     public function testConstruct()
     {
         try {
@@ -48,6 +80,11 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
         }
     }
 
+    /**
+     * Test the creation of a ScheduledSymfonyCommandEntity.
+     *
+     * @throws \Exception
+     */
     public function testCreate()
     {
         $scheduledSymfonyCommandService = new ScheduledSymfonyCommandService(
@@ -61,7 +98,10 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
 
         $this->assertTrue($scheduledSymfonyCommandService->isDue($scheduledSymfonyCommandEntity));
     }
-    
+
+    /**
+     * Close objects to avoid memory leak.
+     */
     protected function tearDown()
     {
         parent::tearDown();
