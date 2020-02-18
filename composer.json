@@ -27,7 +27,8 @@
         "levelab/doctrine-discriminator-bundle": "^0.2.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {
