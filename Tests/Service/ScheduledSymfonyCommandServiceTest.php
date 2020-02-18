@@ -44,7 +44,7 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
             );
             $this->assertTrue(true);
         } catch (\Exception $e) {
-            $this->assertFalse(true, $e->getMessage());
+            $this->assertTrue(false, $e->getMessage());
         }
     }
 
@@ -57,43 +57,14 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
             $this->scheduledCommandType
         );
         $scheduledSymfonyCommandEntity = $scheduledSymfonyCommandService->create();
+        $scheduledSymfonyCommandEntity->setCronExpression('*/1 * * * *');
 
-        $this->assertEquals($this->scheduledCommandType, $scheduledSymfonyCommandEntity->getScheduledCommandEntityType());
+        $this->assertTrue($scheduledSymfonyCommandService->isDue($scheduledSymfonyCommandEntity));
     }
-
-    public function testSave()
-    {
-        $scheduledSymfonyCommandService = new ScheduledSymfonyCommandService(
-            $this->entityManager,
-            $this->scheduledCommandRepository,
-            $this->projectDir,
-            $this->scheduledCommandType
-        );
-        $scheduledSymfonyCommandEntity = $scheduledSymfonyCommandService->create();
-        $scheduledSymfonyCommandEntity->setCommandName('about')
-            ->setCronExpression('*/ * * * *');
-        $scheduledSymfonyCommandService->save($scheduledSymfonyCommandEntity);
-
-        /** @var null|ScheduledCommandEntity $result */
-        $result = $this->scheduledCommandRepository->findOneBy(
-            ['commandName' => $scheduledSymfonyCommandEntity->getCommandName()]
-        );
-
-        $this->assertEquals($scheduledSymfonyCommandEntity->getCommandName(), $result->getCommandName());
-    }
-
-//    public function testUpdate()
-//    {
-//
-//    }
-//
-//    public function delete()
-//    {
-//
-//    }
-
+    
     protected function tearDown()
     {
         parent::tearDown();
+        $this->entityManager->close();
     }
 }
