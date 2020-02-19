@@ -1,6 +1,6 @@
 <?php
 /**
- * Class used to unit tests the ScheduledSymfonyCommandService.
+ * Class used to unit tests the ScheduledConsoleCommandService.
  *
  * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2020
@@ -14,9 +14,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
- * Class ScheduledSymfonyCommandServiceTest.
+ * Class ScheduledConsoleCommandServiceTest.
  */
-class ScheduledSymfonyCommandServiceTest extends KernelTestCase
+class ScheduledConsoleCommandServiceTest extends KernelTestCase
 {
     /**
      * The project root directory.
@@ -54,7 +54,7 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->projectDir = $kernel->getProjectDir();
         $this->scheduledCommandType = $kernel->getContainer()
-            ->getParameter('dades_scheduled_task_bundle.scheduled_command_type.symfony');
+            ->getParameter('dades_scheduled_task_bundle.scheduled_command_type.console');
         $this->scheduledCommandRepository = $this->createMock(ScheduledCommandRepository::class);
         $this->entityManager = $this->createMock(EntityManager::class);
         $this->entityManager->expects($this->any())
@@ -62,30 +62,6 @@ class ScheduledSymfonyCommandServiceTest extends KernelTestCase
             ->willReturn($this->scheduledCommandRepository);
     }
 
-    /**
-     * Test the constructor.
-     */
-    public function testConstruct()
-    {
-        try {
-            $scheduledSymfonyCommandService = new ScheduledSymfonyCommandService(
-                $this->entityManager,
-                $this->scheduledCommandRepository,
-                $this->projectDir,
-                $this->scheduledCommandType
-            );
-
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false, $e->getMessage());
-        }
-    }
-
-    /**
-     * Test the creation of a new scheduled symfony command entity.
-     *
-     * @throws \Exception
-     */
     public function testCreate()
     {
         $scheduledSymfonyCommandService = new ScheduledSymfonyCommandService(
