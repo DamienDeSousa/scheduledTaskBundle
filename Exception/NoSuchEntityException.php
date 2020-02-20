@@ -1,21 +1,19 @@
 <?php
 /**
- * Exception when an entity is nt found
+ * Exception when an entity is nt found.
  *
- * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
- *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2019
  */
-
 namespace Dades\ScheduledTaskBundle\Exception;
 
 /**
- * NoSuchEntityException class
+ * NoSuchEntityException class.
  */
 class NoSuchEntityException extends \Exception
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $message
      * @param int    $code
@@ -26,7 +24,7 @@ class NoSuchEntityException extends \Exception
     }
 
     /**
-     * Return an explicit message of the error
+     * Return an explicit message of the error.
      *
      * @return string
      */

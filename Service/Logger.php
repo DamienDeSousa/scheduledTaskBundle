@@ -80,7 +80,7 @@ class Logger
     }
 
     /**
-     * Transform an array to a string
+     * Transform an array to a string.
      *
      * @param  array  $output
      *
@@ -96,7 +96,7 @@ class Logger
     }
 
     /**
-     * Get the current date
+     * Get the current date.
      *
      * @return string
      */
@@ -106,7 +106,7 @@ class Logger
     }
 
     /**
-     * Get the current file log
+     * Get the current file log.
      *
      * @return string
      */

@@ -65,7 +65,7 @@ class RunCronCommand extends Command
     }
 
     /**
-     * Configure the command
+     * Configure the command.
      */
     protected function configure()
     {
@@ -74,7 +74,7 @@ class RunCronCommand extends Command
     }
 
     /**
-     * The body of the command
+     * The body of the command.
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output

@@ -11,6 +11,9 @@ use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * Class ScheduledCommandRepository.
+ */
 class ScheduledCommandRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

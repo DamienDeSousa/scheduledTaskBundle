@@ -4,11 +4,12 @@ A Symfony Bundle that schedule tasks and commands on Windows and Linux.
 It uses the cron system from Linux on both operating systems.
 
 ## What's new on this version ?
-
-Use `Symfony\Component\Process\Process` instead of `exec()` to run tasks.
+Overhaul of the hierarchy of entities.  
+Managing two kind of command : Console and Symfony command.  
+Overhaul of the hierarchy of services.  
+Adding service unit tests.  
 
 ## Installation
-
 1. Run the following command to add the bundle to your project as a composer dependency:  
 `composer require dades/scheduledtask`
 
@@ -39,7 +40,7 @@ public function registerBundles()
 To do that, run the following command on your cmd:  
 `schtasks /CREATE /TN "uniqueName" /TR "php D:\path\to\your\project\bin\console cron:run" /SC minute`
 
-Make sure that schtasks is globally install on your system.
+Make sure that schtasks is globally installed on your system.
 
 ### Linux OS
 
@@ -52,107 +53,126 @@ To do that, you have to add a cronjob in your crontab:
 ## How it works
 
 Now you're ready to create all the scheduled tasks you want.
-You just need to handle these 2 classes:  
-Dades\ScheduledTaskBundle\Entity\ScheduledTask  
-Dades\ScheduledTaskBundle\Service\ScheduledTaskService
+First, you have to choose between a console or a symfony command.  
 
-Inject the service that handles ScheduledTask class:  
+### Managing a console command
+
+If you want to manage a console command, you have to use the following service:  
+`Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService` with the tag `dades_scheduled_task_bundle.console_command_service`.  
+
+#### Create a console command
 
 ```php
-use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
+use Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService;
 
-public function indexAction(Request $request, ScheduledTaskService $scheduled)
+public function indexAction(Request $request, ScheduledConsoleCommandService $scheduledConsoleCommandService)
 {
-    //code
+    $consoleCommandEntity = $scheduledConsoleCommandService->create();
+    $consoleCommandEntity->setCommand('php --version')
+        ->setCronExpresion('* * * * *');
+    $scheduledConsoleCommandService->save($consoleCommandEntity);
+
+    return new Response('it works');
 }
 ```
-Note that this is a Service, so you can inject it anywhere you want.
+The ScheduledConsoleCommandService::create() method returns a new `Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity`.  
+You have to set at least the command name and the cron expression.
 
-### Create a scheduled task
+#### Get one or more console commands
 
-Once your Service is injected, you can do the following thing:
-
-```php
-public function indexAction(Request $request, ScheduledTaskService $scheduledTaskService)
-{
-    $task = $scheduledTaskService->create();
-    $task->setCommand("php --version")->setCronExpresion("* * * * *");
-    $scheduledTaskService->save($task);
-
-    return new Response("it works");
-}
-```
-
-In this example, the "php --version" command will be run every minute.
-
-### Get one or more scheduled tasks
-
-You can get a task by its id or get all tasks in an array.
-Example:
+#### Update a console command
 
 ```php
-public function indexAction(Request $request, ScheduledTaskService $scheduledTaskService)
-{
-    //get the task with id 1
-    $task = $scheduledTaskService->getScheduledTask(1);
-    //get all tasks
-    $tasks = $scheduledTaskService->getScheduledTasks();
+use Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService;
 
+public function indexAction(Request $request, ScheduledConsoleCommandService $scheduledConsoleCommandService)
+{
     //...
+    $consoleCommandEntity->setCommand('php --version');
+    $scheduledConsoleCommandService->update($consoleCommandEntity);
+
+    return new Response('it works');
 }
 ```
+Update the command of the console command.
 
-### Update a scheduled task
-
-To update a task, just set the value that you want to change and call the ScheduledTaskService:
+#### Delete a console command
 
 ```php
-public function indexAction(Request $request, ScheduledTaskService $scheduledTaskService)
+use Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService;
+
+public function indexAction(Request $request, ScheduledConsoleCommandService $scheduledConsoleCommandService)
 {
-    //get the task with id 1
-    $task = $scheduledTaskService->getScheduledTask(1);
-    $task->setCommand("crontab -l")->setCronExpresion("0 5 * * *");
-    $scheduledTaskService->update($task);
-
     //...
+    $scheduledConsoleCommandService->delete($consoleCommandEntity);
+
+    return new Response('it works');
 }
 ```
+Delete a console command.
 
-### Delete a task
+### Managing a symfony command
 
-You have to get the task that you want to remove and call the delete method:
+If you want to manage a console command, you have to use the following service:  
+`Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService` with the tag `dades_scheduled_task_bundle.symfony_command_service`.
+
+#### Create a symfony command
 
 ```php
-public function indexAction(Request $request, ScheduledTaskService $scheduledTaskService)
+use Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService;
+
+public function indexAction(Request $request, ScheduledSymfonyCommandService $scheduledSymfonyCommandService)
 {
-    //get the task with id 1
-    $task = $scheduledTaskService->getScheduledTask(1);
-    $scheduledTaskService->delete($task);
+    $consoleCommandEntity = $scheduledSymfonyCommandService->create();
+    $consoleCommandEntity->setCommand('php --version')
+        ->setCronExpresion('* * * * *');
+    $scheduledSymfonyCommandService->save($consoleCommandEntity);
 
-    //...
+    return new Response('it works');
 }
 ```
+The $scheduledSymfonyCommandService::create() method returns a new `Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity`.  
+You have to set at least the command name and the cron expression.
 
-### Where the magic happens
+#### Get one or more symfony commands
 
-Now you know how to install, setup and handle scheduled tasks, but you don't know yet where they are executed.  
-Just have a look in the Dades\ScheduledTaskBundle\Command\RunCronCommand class.  
+
+
+#### Update a symfony command
 
 ```php
-$process = new Process($scheduledTask->getCommand());
-$exitCode = $process->run();
+use Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService;
+
+public function indexAction(Request $request, ScheduledSymfonyCommandService $scheduledSymfonyCommandService)
+{
+    //...
+    $consoleCommandEntity->setCommand('php --version');
+    $scheduledSymfonyCommandService->update($consoleCommandEntity);
+
+    return new Response('it works');
+}
 ```
+Update the command of the console command.
 
-These 2 lines to the trick.  
-The first line creates the command to run in a Process.  
-The second line execute the process.
+#### Delete a symfony command
 
-## More informations
+```php
+use Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService;
 
-The stdout and stderr streams are logged in the var/logs/dades_scheduled_task_bundle.log.  
-Thanks to this file, you have a trace of all your task executions.  
-If the file doesn't exist, don't worry, it will be automatically created.
+public function indexAction(Request $request, ScheduledSymfonyCommandService $scheduledSymfonyCommandService)
+{
+    //...
+    $scheduledSymfonyCommandService->delete($consoleCommandEntity);
 
-This bundle use the dragonmantank/cron-expression library.  
-This lib read the cron expression of each task to determine if this task should be run now.  
-I invite you to read more about this [here](https://packagist.org/packages/dragonmantank/cron-expression).
+    return new Response('it works');
+}
+```
+Delete a console command.
+
+### Running commands
+THREAD !
+
+### Running unit tests
+
+From the project root directory, the unit test classes are inside the following directory: `vendor/dades/scheduledtask/Tests/Service/`.  
+You can run the following command to launch unit tests: `./vendor/bin/simple-phpunit vendor/dades/scheduledtask/Tests/Service/`.

@@ -2,27 +2,25 @@
 /**
  * Exception when a command gets an error
  *
- * @author Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
- *
+ * @author    Damien DE SOUSA <de.sousa.damien.pro@gmail.com>
  * @copyright 2019
  */
-
 namespace Dades\ScheduledTaskBundle\Exception;
 
 /**
- * BadCommandException class
+ * BadCommandException class.
  */
 class BadCommandException extends \Exception
 {
     /**
-     * the command that is on error
+     * the command that is on error.
      *
      * @var string
      */
     protected $command;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $command
      * @param string $message
@@ -32,9 +30,8 @@ class BadCommandException extends \Exception
      */
     public function __construct(string $command, string $message, int $code, string $file, int $line)
     {
+        parent::__construct($message, $code);
         $this->command = $command;
-        $this->message = $message;
-        $this->code = $code;
         $this->file = $file;
         $this->line = $line;
     }
