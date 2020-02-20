@@ -92,4 +92,70 @@ abstract class ScheduledCommandService extends ScheduledEntityService
 
         return '[' . $currentDate . '] ' . $command . ' : ' . PHP_EOL;
     }
+
+    /**
+     * Find scheduled command entities with specific parameters and corresponding to the right scheduled command type.
+     *
+     * @param array      $criteria
+     * @param array|null $orderBy
+     * @param int|null   $limit
+     * @param int|null   $offset
+     *
+     * @return array
+     */
+    public function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
+    {
+        $criteria['scheduledCommandType'] = $this->scheduledCommandType;
+
+        return $this->scheduledCommandRepository->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Find one scheduled command entity with specific parameters and corresponding to the right scheduled command type.
+     *
+     * @param array      $criteria
+     * @param array|null $orderBy
+     *
+     * @return object|null
+     */
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        $criteria['scheduledCommandType'] = $this->scheduledCommandType;
+
+        return $this->scheduledCommandRepository->findOneBy($criteria, $orderBy);
+    }
+
+    /**
+     * Find all scheduled commands corresponding to the right scheduled command type.
+     *
+     * @return array
+     */
+    public function findAll()
+    {
+        $criteria['scheduledCommandType'] = $this->scheduledCommandType;
+
+        return $this->scheduledCommandRepository->findBy($criteria);
+    }
+
+    /**
+     * Find a scheduled by its ID and corresponding to the right scheduled command type.
+     * @param mixed    $id
+     * @param int|null $lockMode
+     * @param int|null $lockVersion
+     *
+     * @return ScheduledCommandEntity|null
+     */
+    public function find($id, int $lockMode = null, int $lockVersion = null)
+    {
+        /** @var null|ScheduledCommandEntity $scheduledCommandEntity */
+        $scheduledCommandEntity = $this->scheduledCommandRepository->find($id, $lockMode, $lockVersion);
+
+        if ($scheduledCommandEntity !== null) {
+            if ($scheduledCommandEntity->getScheduledCommandEntityType() !== $this->scheduledCommandType) {
+                $scheduledCommandEntity = null;
+            }
+        }
+
+        return $scheduledCommandEntity;
+    }
 }

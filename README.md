@@ -38,7 +38,7 @@ public function registerBundles()
 
 5. You have to tell to your system to check every minute if a task should be run.
 To do that, run the following command on your cmd:  
-`schtasks /CREATE /TN "uniqueName" /TR "php D:\path\to\your\project\bin\console cron:run" /SC minute`
+`schtasks /CREATE /TN "uniqueName" /TR "php D:\path\to\your\project\bin\console dades:scheduled-command:run" /SC minute`
 
 Make sure that schtasks is globally installed on your system.
 
@@ -48,7 +48,7 @@ Make sure that schtasks is globally installed on your system.
 To do that, you have to add a cronjob in your crontab:  
     1. run `crontab -e` to edit your crontab
 
-    2. add `* * * * * php /path/to/your/project/bin/console cron:run >> ~/tmp 2>&1` in the file
+    2. add `* * * * * php /path/to/your/project/bin/console dades:scheduled-command:run >> ~/tmp 2>&1` in the file
 
 ## How it works
 
@@ -79,6 +79,30 @@ The ScheduledConsoleCommandService::create() method returns a new `Dades\Schedul
 You have to set at least the command name and the cron expression.
 
 #### Get one or more console commands
+
+```php
+use Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService;
+
+public function indexAction(Request $request, ScheduledConsoleCommandService $scheduledConsoleCommandService)
+{
+    $criteria = [
+        'name' => 'php',
+        'parameters' => '-v'
+    ];
+    $scheduledConsoleCommandService->findBy($criteria);
+    // it's also possible to order the result, set a limit and an offset.
+    
+    $scheduledConsoleCommandService->findOneBy($criteria);
+
+    $scheduledConsoleCommandService->findAll();
+    // find all console commands.
+
+    $scheduledConsoleCommandService->find($id);
+    // find a scheduled console command by its ID. 
+
+    return new Response('it works');
+}
+```
 
 #### Update a console command
 
@@ -136,7 +160,29 @@ You have to set at least the command name and the cron expression.
 
 #### Get one or more symfony commands
 
+```php
+use Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService;
 
+public function indexAction(Request $request, ScheduledSymfonyCommandService $scheduledSymfonyCommandService)
+{
+    $criteria = [
+        'name' => 'php',
+        'parameters' => '-v'
+    ];
+    $scheduledSymfonyCommandService->findBy($criteria);
+    // it's also possible to order the result, set a limit and an offset.
+    
+    $scheduledSymfonyCommandService->findOneBy($criteria);
+
+    $scheduledSymfonyCommandService->findAll();
+    // find all console commands.
+
+    $scheduledSymfonyCommandService->find($id);
+    // find a scheduled symfony command by its ID. 
+
+    return new Response('it works');
+}
+```
 
 #### Update a symfony command
 
@@ -170,9 +216,20 @@ public function indexAction(Request $request, ScheduledSymfonyCommandService $sc
 Delete a console command.
 
 ### Running commands
-THREAD !
+
+The command `dades:scheduled-command:run` runs both console and symfony commands **synchronously**.
 
 ### Running unit tests
 
 From the project root directory, the unit test classes are inside the following directory: `vendor/dades/scheduledtask/Tests/Service/`.  
 You can run the following command to launch unit tests: `./vendor/bin/simple-phpunit vendor/dades/scheduledtask/Tests/Service/`.
+
+## More informations
+
+The stdout and stderr streams are logged in the var/logs/dades_scheduled_task_bundle.log.
+Thanks to this file, you have a trace of all your task executions.
+If the file doesn't exist, don't worry, it will be automatically created.
+
+This bundle use the dragonmantank/cron-expression library.
+This lib read the cron expression of each task to determine if this task should be run now.
+I invite you to read more about this [here](https://packagist.org/packages/dragonmantank/cron-expression).
