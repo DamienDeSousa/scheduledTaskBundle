@@ -9,14 +9,11 @@ namespace Dades\ScheduledTaskBundle\Repository;
 
 use Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-/**
- * Class ScheduledCommandRepository.
- */
 class ScheduledCommandRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, $entityClass)
     {
         parent::__construct($registry, ScheduledCommandEntity::class);
     }

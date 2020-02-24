@@ -1,14 +1,24 @@
 parameters:
+  # Simple param identifier
   dades_scheduled_task_bundle.fileLog: dades_scheduled_task_bundle.log
   dades_scheduled_task_bundle.scheduled_command_type.symfony: scheduled_symfony_command
   dades_scheduled_task_bundle.scheduled_command_type.console: scheduled_console_command
 
-#  Class identifiers
+  # Entity class identifier
+  dades_scheduled_task_bundle.scheduled_command_entity.class: Dades\ScheduledTaskBundle\Entity\ScheduledCommandEntity
+
+  # Service class identifier
   dades_scheduled_task_bundle.logger.class: Dades\ScheduledTaskBundle\Service\Logger
   dades_scheduled_task_bundle.console_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledConsoleCommandService
-  dades_scheduled_task_bundle.run_command.class: Dades\ScheduledTaskBundle\Command\RunCronCommand
-  dades_scheduled_task_bundle.scheduled_command_repository.class: Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository
   dades_scheduled_task_bundle.symfony_command_service.class: Dades\ScheduledTaskBundle\Service\ScheduledSymfonyCommandService
+
+  # Command class identifier
+  dades_scheduled_task_bundle.run_command.class: Dades\ScheduledTaskBundle\Command\RunCronCommand
+
+  # Repository class identifier
+  dades_scheduled_task_bundle.scheduled_command_repository.class: Dades\ScheduledTaskBundle\Repository\ScheduledCommandRepository
+
+
 
 services:
   # Services
@@ -47,3 +57,4 @@ services:
     class: '%dades_scheduled_task_bundle.scheduled_command_repository.class%'
     arguments:
       - '@doctrine'
+      - '%dades_scheduled_task_bundle.scheduled_command_entity.class%'
